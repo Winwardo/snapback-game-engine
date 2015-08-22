@@ -2,14 +2,13 @@ extern crate sdl2;
 
 use sdl2::pixels::Color;
 use sdl2::Sdl;
-use std::boxed::Box;
 
 static SCREEN_WIDTH: u32 = 1280;
 static SCREEN_HEIGHT: u32 = 720;
 static WINDOW_TITLE: &'static str = "Snapback engine";
 
 pub struct RenderSystem<'a> {
-    sdlRenderer: sdl2::render::Renderer<'a>,
+    sdl_renderer: sdl2::render::Renderer<'a>,
 }
 
 impl<'a> RenderSystem<'a> {
@@ -24,7 +23,7 @@ impl<'a> RenderSystem<'a> {
         let renderer = window.renderer().build().unwrap();
 
         RenderSystem {
-            sdlRenderer: renderer,
+            sdl_renderer: renderer,
         }
     }
 
@@ -33,16 +32,16 @@ impl<'a> RenderSystem<'a> {
         let g:u8 = (ticks*7) as u8;
         let b:u8 = (ticks*8) as u8;
 
-        self.updateTitle(ticks);
+        self.update_title(ticks);
 
-        self.sdlRenderer.set_draw_color(Color::RGB(r,g,b));
-        self.sdlRenderer.clear();
-        self.sdlRenderer.present();
+        self.sdl_renderer.set_draw_color(Color::RGB(r,g,b));
+        self.sdl_renderer.clear();
+        self.sdl_renderer.present();
     }
 
-    fn updateTitle(&mut self, ticks: u64) {
+    fn update_title(&mut self, ticks: u64) {
 
-        let mut window = self.sdlRenderer.window_mut().unwrap();
+        let mut window = self.sdl_renderer.window_mut().unwrap();
         let title = format!("Snapback engine - {} ticks", ticks);
         window.set_title(&title);
     }

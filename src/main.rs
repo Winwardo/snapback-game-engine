@@ -4,7 +4,6 @@ extern crate sdl2;
 extern crate time;
 
 use sdl2::Sdl;
-use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
 use std::thread;
 
@@ -16,13 +15,13 @@ fn main() {
     env_logger::init().unwrap();
     let mut game = Game::new();
     game.run();
-    close();
+    game.close();
 }
 
 struct Game<'a> {
-    renderSystem: render::renderer::RenderSystem<'a>,
-    lastTick: u64,
-    isRunning: bool,
+    render_system: render::renderer::RenderSystem<'a>,
+    last_tick: u64,
+    is_running: bool,
     sdl_context: Sdl,
 }
 
@@ -33,28 +32,16 @@ impl<'a> Game<'a> {
         let sdl_context = sdl2::init().unwrap();
 
         Game {
-            renderSystem: render::renderer::RenderSystem::new(&sdl_context),
-            lastTick: time::precise_time_ns(),
-            isRunning: true,
+            render_system: render::renderer::RenderSystem::new(&sdl_context),
+            last_tick: time::precise_time_ns(),
+            is_running: true,
             sdl_context: sdl_context,
         }
     }
 
     pub fn run(&mut self) {
-        while self.isRunning {
-            /*
-            for event in event_pump.poll_iter() {
-                use sdl2::event::Event;
-
-                match event {
-                    Event::Quit {..} | Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                        running = false
-                    },
-                    _ => {}
-                }
-            }
-            */
-
+        while self.is_running {
+            self.check_events();
             self.tick();
             self.render();
 
@@ -62,81 +49,30 @@ impl<'a> Game<'a> {
         }
     }
 
-    pub fn tick(&mut self) {
-        self.lastTick = time::precise_time_ns();
-    }
-
-    pub fn render(&mut self) {
-        self.renderSystem.render(self.lastTick);
-    }
-}
-
-
-
-
-fn go() {
-    /*
-    let sdl_context = sdl2::init().unwrap();
-    let video_subsystem = sdl_context.video().unwrap();
-
-    let window = video_subsystem.window("rust-sdl2 demo: Video", 800, 600)
-        .position_centered()
-        .opengl()
-        .build()
-        .unwrap();
-
-    let mut renderer = window.renderer().build().unwrap();
-    */
-
-    //renderer.set_draw_color(Color::RGB(255, 0, 0));
-    //renderer.clear();
-    //renderer.present();
-
-    let mut running = true;
-    let mut tick = 0;
-
-
-    /*
-    let mut event_pump = sdl_context.event_pump().unwrap();
-
-    while running {
+    pub fn check_events(&mut self) {
+        let mut event_pump = self.sdl_context.event_pump().unwrap();
         for event in event_pump.poll_iter() {
             use sdl2::event::Event;
 
             match event {
                 Event::Quit {..} | Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                    running = false
+                    self.is_running = false
                 },
                 _ => {}
             }
         }
-        
-        {
-            // Update the window title.
-            let mut window = renderer.window_mut().unwrap();
-
-            let position = window.position();
-            let size = window.size();
-            let title = format!("Window - pos({}x{}), size({}x{}): {}", position.0, position.1, size.0, size.1, tick);
-            window.set_title(&title);
-
-            tick += 1;
-        }
-
-        let r:u8 = (tick*5) as u8;
-        let g:u8 = (tick*7) as u8;
-        let b:u8 = (tick*8) as u8;
-
-        renderer.set_draw_color(Color::RGB(r,g,b));
-        renderer.clear();
-        renderer.present();
-
-        thread::sleep_ms(33);
     }
-    */
-}
 
-fn close() {
-    info!("Goodbye!");
+    pub fn tick(&mut self) {
+        self.last_tick = time::precise_time_ns();
+    }
+
+    pub fn render(&mut self) {
+        self.render_system.render(self.last_tick);
+    }
+
+    pub fn close(&self) {
+        info!("Goodbye!");
+    }
 }
 
