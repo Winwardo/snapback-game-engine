@@ -3,13 +3,21 @@ extern crate env_logger;
 extern crate sdl2;
 extern crate time;
 
-use sdl2::Sdl;
-use sdl2::keyboard::Keycode;
-use std::thread;
+mod core {
+    pub mod entity;
+    pub mod sprite;
+    pub mod square;
+}
 
 mod render {
     pub mod renderer;
+    pub mod renderable;
 }
+
+use core::*;
+use sdl2::Sdl;
+use sdl2::keyboard::Keycode;
+use std::thread;
 
 fn main() {
     env_logger::init().unwrap();
@@ -23,6 +31,7 @@ struct Game<'a> {
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
+    entities: Vec<Box<entity::Entity>>,
 }
 
 impl<'a> Game<'a> {
@@ -36,6 +45,7 @@ impl<'a> Game<'a> {
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
+            entities: vec![Box::new(square::Square::new())],
         }
     }
 
@@ -68,7 +78,7 @@ impl<'a> Game<'a> {
     }
 
     pub fn render(&mut self) {
-        self.render_system.render(self.last_tick);
+        self.render_system.render(self.last_tick, &self.entities);
     }
 
     pub fn close(&self) {

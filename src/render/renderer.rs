@@ -1,5 +1,8 @@
 extern crate sdl2;
 
+use super::super::core::entity::*;
+use super::renderable::*;
+
 use sdl2::pixels::Color;
 use sdl2::Sdl;
 
@@ -29,17 +32,29 @@ impl<'a> RenderSystem<'a> {
         }
     }
 
-    pub fn render(&mut self, ticks: u64) {
-        self.update_title(ticks);
+    pub fn render(&mut self, tick: u64, entities: &Vec<Box<Entity>>) {
+        self.update_title(tick);
+
+        let mut renderables: Vec<Box<Renderable>> = Vec::new();
+
+        for entity in entities {
+            match entity.renderable() {
+                Some(x) => renderables.push(x),
+                None => {}
+            }
+        }
+
+        for renderable in renderables {
+            (*renderable).draw();
+        }
 
         self.sdl_renderer.clear();
         self.sdl_renderer.present();
     }
 
-    fn update_title(&mut self, ticks: u64) {
-
+    fn update_title(&mut self, tick: u64) {
         let mut window = self.sdl_renderer.window_mut().unwrap();
-        let title = format!("Snapback engine - {} ticks", ticks);
+        let title = format!("Snapback engine - tick {}", tick);
         window.set_title(&title);
     }
 }
