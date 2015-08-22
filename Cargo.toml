@@ -1,0 +1,4 @@
+[package]
+name = "snapback-game-engine"
+version = "0.0.1"
+authors = ["Topher Winward <hi@topher.io>"]
