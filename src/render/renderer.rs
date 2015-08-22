@@ -1,6 +1,7 @@
 extern crate sdl2;
 
 use sdl2::pixels::Color;
+use sdl2::Sdl;
 use std::boxed::Box;
 
 static SCREEN_WIDTH: u32 = 1280;
@@ -12,8 +13,7 @@ pub struct RenderSystem<'a> {
 }
 
 impl<'a> RenderSystem<'a> {
-    pub fn new() -> RenderSystem<'a> {
-        let sdl_context = sdl2::init().unwrap();
+    pub fn new(sdl_context: &Sdl) -> RenderSystem<'a> {
         let video_subsystem = sdl_context.video().unwrap();
 
         let window = video_subsystem.window(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)

@@ -3,6 +3,7 @@ extern crate env_logger;
 extern crate sdl2;
 extern crate time;
 
+use sdl2::Sdl;
 use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
 use std::thread;
@@ -18,24 +19,42 @@ fn main() {
     close();
 }
 
-
 struct Game<'a> {
     renderSystem: render::renderer::RenderSystem<'a>,
     lastTick: u64,
+    isRunning: bool,
+    sdl_context: Sdl,
 }
 
 impl<'a> Game<'a> {
     pub fn new() -> Game<'a> {
         info!("Setting up game.");
 
+        let sdl_context = sdl2::init().unwrap();
+
         Game {
-            renderSystem: render::renderer::RenderSystem::new(),
+            renderSystem: render::renderer::RenderSystem::new(&sdl_context),
             lastTick: time::precise_time_ns(),
+            isRunning: true,
+            sdl_context: sdl_context,
         }
     }
 
     pub fn run(&mut self) {
-        while true {
+        while self.isRunning {
+            /*
+            for event in event_pump.poll_iter() {
+                use sdl2::event::Event;
+
+                match event {
+                    Event::Quit {..} | Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                        running = false
+                    },
+                    _ => {}
+                }
+            }
+            */
+
             self.tick();
             self.render();
 
