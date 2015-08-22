@@ -8,10 +8,8 @@ static SCREEN_HEIGHT: u32 = 720;
 static WINDOW_TITLE: &'static str = "Snapback engine";
 
 pub struct RenderSystem<'a> {
-   // window: sdl2::video::Window,
     sdlRenderer: sdl2::render::Renderer<'a>,
 }
-
 
 impl<'a> RenderSystem<'a> {
     pub fn new() -> RenderSystem<'a> {
@@ -23,13 +21,9 @@ impl<'a> RenderSystem<'a> {
             .opengl()
             .build()
             .unwrap();
-        //let q = Box::new(window);
-        //let r = q.clone();
-
-        let mut renderer = window.renderer().build().unwrap();
+        let renderer = window.renderer().build().unwrap();
 
         RenderSystem {
-            //window: window,
             sdlRenderer: renderer,
         }
     }
@@ -39,11 +33,17 @@ impl<'a> RenderSystem<'a> {
         let g:u8 = (ticks*7) as u8;
         let b:u8 = (ticks*8) as u8;
 
-        let title = format!("Snapback engine - {} ticks", ticks);
-        //self.window.set_title(&title);
+        self.updateTitle(ticks);
 
         self.sdlRenderer.set_draw_color(Color::RGB(r,g,b));
         self.sdlRenderer.clear();
         self.sdlRenderer.present();
+    }
+
+    fn updateTitle(&mut self, ticks: u64) {
+
+        let mut window = self.sdlRenderer.window_mut().unwrap();
+        let title = format!("Snapback engine - {} ticks", ticks);
+        window.set_title(&title);
     }
 }

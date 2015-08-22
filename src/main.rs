@@ -15,6 +15,7 @@ fn main() {
     env_logger::init().unwrap();
     let mut game = Game::new();
     game.run();
+    close();
 }
 
 
