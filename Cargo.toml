@@ -5,3 +5,6 @@ authors = ["Topher Winward <hi@topher.io>"]
 
 [dependencies]
 time = "*"
+glium = "*"
+sdl2 = "*"
+nalgebra = "*"
