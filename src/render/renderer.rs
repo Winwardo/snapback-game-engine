@@ -20,7 +20,9 @@ impl<'a> RenderSystem<'a> {
             .opengl()
             .build()
             .unwrap();
-        let renderer = window.renderer().build().unwrap();
+        let mut renderer = window.renderer().build().unwrap();
+
+        renderer.set_draw_color(Color::RGB(70,80,160));
 
         RenderSystem {
             sdl_renderer: renderer,
@@ -28,13 +30,8 @@ impl<'a> RenderSystem<'a> {
     }
 
     pub fn render(&mut self, ticks: u64) {
-        let r:u8 = (ticks*5) as u8;
-        let g:u8 = (ticks*7) as u8;
-        let b:u8 = (ticks*8) as u8;
-
         self.update_title(ticks);
 
-        self.sdl_renderer.set_draw_color(Color::RGB(r,g,b));
         self.sdl_renderer.clear();
         self.sdl_renderer.present();
     }
