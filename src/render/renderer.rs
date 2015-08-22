@@ -34,6 +34,7 @@ impl<'a> RenderSystem<'a> {
 
     pub fn render(&mut self, tick: u64, entities: &Vec<Box<Entity>>) {
         self.update_title(tick);
+        self.sdl_renderer.clear();
 
         let mut renderables: Vec<Box<Renderable>> = Vec::new();
 
@@ -45,10 +46,9 @@ impl<'a> RenderSystem<'a> {
         }
 
         for renderable in renderables {
-            (*renderable).draw();
+            (*renderable).draw(&mut self.sdl_renderer);
         }
 
-        self.sdl_renderer.clear();
         self.sdl_renderer.present();
     }
 
