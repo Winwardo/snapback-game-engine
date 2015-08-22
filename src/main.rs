@@ -17,7 +17,6 @@ mod render {
 use core::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
-use std::thread;
 
 fn main() {
     env_logger::init().unwrap();
@@ -39,13 +38,19 @@ impl<'a> Game<'a> {
         info!("Setting up game.");
 
         let sdl_context = sdl2::init().unwrap();
+        let render_system = render::renderer::RenderSystem::new(&sdl_context);
+
+        let mut entities: Vec<Box<entity::Entity>> = Vec::new();
+        for _ in 0..5000 {
+            entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
+        }
 
         Game {
-            render_system: render::renderer::RenderSystem::new(&sdl_context),
+            render_system: render_system,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
-            entities: vec![Box::new(square::Square::new())],
+            entities: entities,
         }
     }
 
@@ -54,8 +59,6 @@ impl<'a> Game<'a> {
             self.check_events();
             self.tick();
             self.render();
-
-            thread::sleep_ms(33);
         }
     }
 
@@ -74,7 +77,13 @@ impl<'a> Game<'a> {
     }
 
     pub fn tick(&mut self) {
-        self.last_tick = time::precise_time_ns();
+        let now = time::precise_time_ns();
+        let ticks = now - self.last_tick;
+        self.last_tick = now;
+
+        for entity in self.entities.iter_mut() {
+            entity.update(ticks);
+        };
     }
 
     pub fn render(&mut self) {
@@ -85,4 +94,3 @@ impl<'a> Game<'a> {
         info!("Goodbye!");
     }
 }
-

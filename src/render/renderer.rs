@@ -11,7 +11,7 @@ static SCREEN_HEIGHT: u32 = 720;
 static WINDOW_TITLE: &'static str = "Snapback engine";
 
 pub struct RenderSystem<'a> {
-    sdl_renderer: sdl2::render::Renderer<'a>,
+    pub sdl_renderer: sdl2::render::Renderer<'a>,
 }
 
 impl<'a> RenderSystem<'a> {
@@ -36,7 +36,7 @@ impl<'a> RenderSystem<'a> {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
-        let mut renderables: Vec<Box<Renderable>> = Vec::new();
+        let mut renderables: Vec<&Renderable> = Vec::new();
 
         for entity in entities {
             match entity.renderable() {
