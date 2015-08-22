@@ -5,6 +5,7 @@ authors = ["Topher Winward <hi@topher.io>"]
 
 [dependencies]
 time = "*"
-glium = "*"
-sdl2 = "*"
 nalgebra = "*"
+log = "0.3"
+env_logger = "*"
+sdl2 = "*"
