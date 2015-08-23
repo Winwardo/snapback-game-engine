@@ -12,7 +12,7 @@ script:
   - cargo doc --verbose
 before_install:
   - sudo apt-get update
-install:
+install: 
   - wget http://www.sfml-dev.org/download/sfml/2.1/SFML-2.1-linux-gcc-64bits.tar.bz2
   - tar xf SFML-2.1-linux-gcc-64bits.tar.bz2
   - sudo cp -r SFML-2.1/lib/* /usr/local/lib/.
