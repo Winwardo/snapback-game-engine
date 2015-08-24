@@ -22,4 +22,10 @@ impl System<Transform> for TransformSystem {
 	fn get(&self, entity: u64) -> &Transform {
 		&self.transforms[0]
 	}
+
+	fn run(&mut self) {
+		for t in self.transforms.iter_mut() {
+			t.rotation += 1f32;
+		}
+	}
 }

@@ -68,4 +68,8 @@ impl<'a> System<Sprite> for RenderSystem<'a> {
     fn get(&self, entity: u64) -> &Sprite {
         &self.drawables[0]
     }
+
+    fn run(&mut self) {
+
+    }
 }

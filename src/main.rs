@@ -26,6 +26,7 @@ use core::sprite::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
 use std::rc::Rc;
+use core::system::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -102,9 +103,7 @@ impl<'a> Game<'a> {
         let ticks = now - self.last_tick;
         self.last_tick = now;
 
-        for entity in self.entities.iter_mut() {
-            //entity.update(ticks);
-        };
+        self.transform_system.run();
     }
 
     pub fn render(&mut self) {
