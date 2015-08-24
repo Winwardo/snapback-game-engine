@@ -6,10 +6,13 @@ use self::na::{Vec2};
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
 use rand::Rng;
+use std::rc::Rc;
+use core::transformsystem::*;
 
 use sdl2::rect::Rect;
 
 pub struct Sprite {
+	pub entity: u64,
 	pub position: Vec2<f32>,
 	pub scaling: Vec2<f32>,
 	pub rotation: f32,
@@ -17,14 +20,18 @@ pub struct Sprite {
 }
 
 impl Renderable for Sprite {
-	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>) {
+	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, transform_system: &TransformSystem) {
 	    // renderer.copy(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)));
-    	renderer.copy_ex(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)), self.rotation as f64, None, (false, false));
+    	
+	    // find rotation in transforms
+	    let transform = transform_system.get(self.entity);
+
+    	renderer.copy_ex(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)), transform.rotation as f64, None, (false, false));
 	}
 }
 
 impl Sprite {
-	pub fn make<'a>(entity: &Entity2, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
+	pub fn make<'a>(entity: u64, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
 		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (256, 256)).unwrap();
 	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 	        for y in (0..256) {
@@ -38,6 +45,7 @@ impl Sprite {
 	    }).unwrap();
 
 		Sprite {
+			entity: entity,
 			position: Vec2::new(100f32, 100f32),
 			scaling: Vec2 {x: 1f32, y: 1f32},
 			rotation: 0.0f32,

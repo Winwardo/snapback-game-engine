@@ -37,6 +37,7 @@ impl Square {
 	    }).unwrap();
 
 		let sprite = Sprite {
+			entity: 7u64,
 			position: Vec2::new(100f32, 100f32),
 			scaling: Vec2 {x: 1f32, y: 1f32},
 			rotation: 0.0f32,

@@ -9,6 +9,8 @@ use core::sprite::*;
 use sdl2::pixels::Color;
 use sdl2::Sdl;
 
+use core::transformsystem::*;
+
 static SCREEN_WIDTH: u32 = 1280;
 static SCREEN_HEIGHT: u32 = 720;
 static WINDOW_TITLE: &'static str = "Snapback engine";
@@ -41,14 +43,14 @@ impl<'a> RenderSystem<'a> {
         self.drawables.push(sprite);
     }
 
-    pub fn render(&mut self, tick: u64, entities: &Vec<Rc<Entity2>>) {
+    pub fn render(&mut self, tick: u64, entities: &Vec<Rc<Entity2>>, transforms: &TransformSystem) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
         info!("Start drawing all.");
         for drawable in self.drawables.iter() {
             info!("Drawing.");
-            drawable.draw(&mut self.sdl_renderer);
+            drawable.draw(&mut self.sdl_renderer, &transforms);
         }
 
         self.sdl_renderer.present();

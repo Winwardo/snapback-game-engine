@@ -12,6 +12,7 @@ mod core {
     pub mod square;
     pub mod square2;
     pub mod transform;
+    pub mod transformsystem;
     pub mod component;
 }
 
@@ -35,6 +36,7 @@ fn main() {
 
 struct Game<'a> {
     render_system: render::renderer::RenderSystem<'a>,
+    transform_system: core::transformsystem::TransformSystem,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
@@ -47,6 +49,7 @@ impl<'a> Game<'a> {
 
         let sdl_context = sdl2::init().unwrap();
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
+        let mut transform_system = core::transformsystem::TransformSystem::new();
 
 
         let mut entities: Vec<Rc<entity::Entity2>> = Vec::new();
@@ -60,10 +63,11 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        square2::make_square(&mut render_system);
+        square2::make_square(&mut render_system, &mut transform_system);
 
         Game {
             render_system: render_system,
+            transform_system: transform_system,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
@@ -104,7 +108,7 @@ impl<'a> Game<'a> {
     }
 
     pub fn render(&mut self) {
-        self.render_system.render(self.last_tick, &self.entities);
+        self.render_system.render(self.last_tick, &self.entities, &self.transform_system);
     }
 
     pub fn close(&self) {

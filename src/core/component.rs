@@ -1,5 +1,6 @@
 use core::entity::*;
+use std::rc::Rc;
 
 pub trait Component {
-	fn entity(self) -> Entity2;
+	fn entity(self) -> u64;
 }
