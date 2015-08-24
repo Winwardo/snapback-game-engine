@@ -1,4 +1,4 @@
-use core::entity2::*;
+use core::entity::*;
 
 pub trait Component {
 	fn entity(self) -> Entity2;

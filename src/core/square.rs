@@ -54,6 +54,7 @@ impl Square {
 	}
 }
 
+/*
 impl Entity for Square {
 	fn update(&mut self, ticks: u64) {
 		self.ticks += ticks;
@@ -70,3 +71,4 @@ impl Entity for Square {
 		Some(&self.sprite)
 	}
 }
+*/

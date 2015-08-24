@@ -1,6 +1,13 @@
-use super::super::render::renderable::*;
+extern crate time;
 
-pub trait Entity {
-	fn update(&mut self, ticks: u64);
-	fn renderable(&self) -> Option<&Renderable>;
+use std::rc::Rc;
+
+pub struct Entity2 {
+	id: u64,
+}
+
+impl Entity2 {
+	pub fn new() -> Entity2 {
+		Entity2 { id: time::precise_time_ns() }
+	}
 }

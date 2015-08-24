@@ -1,6 +1,7 @@
 extern crate nalgebra as na;
 extern crate sdl2;
 
+use core::entity::*;
 use self::na::{Vec2};
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
@@ -23,7 +24,7 @@ impl Renderable for Sprite {
 }
 
 impl Sprite {
-	pub fn make<'a>(renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
+	pub fn make<'a>(entity: &Entity2, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
 		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (256, 256)).unwrap();
 	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 	        for y in (0..256) {

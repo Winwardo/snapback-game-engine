@@ -1,5 +1,5 @@
 use core::component::*;
-use core::entity2::*;
+use core::entity::*;
 use nalgebra::{Vec2};
 
 struct Transform {

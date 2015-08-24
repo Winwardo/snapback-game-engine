@@ -2,7 +2,7 @@ extern crate sdl2;
 
 use std::rc::Rc;
 
-use super::super::core::entity::*;
+use core::entity::*;
 use super::renderable::*;
 use core::sprite::*;
 
@@ -15,7 +15,7 @@ static WINDOW_TITLE: &'static str = "Snapback engine";
 
 pub struct RenderSystem<'a> {
     pub sdl_renderer: sdl2::render::Renderer<'a>,
-    drawables: Vec<Rc<Sprite>>,
+    drawables: Vec<Sprite>,
 }
 
 impl<'a> RenderSystem<'a> {
@@ -37,11 +37,11 @@ impl<'a> RenderSystem<'a> {
         }
     }
 
-    pub fn register(&mut self, sprite: Rc<Sprite>) {
+    pub fn register(&mut self, sprite: Sprite) {
         self.drawables.push(sprite);
     }
 
-    pub fn render(&mut self, tick: u64, entities: &Vec<Box<Entity>>) {
+    pub fn render(&mut self, tick: u64, entities: &Vec<Rc<Entity2>>) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 

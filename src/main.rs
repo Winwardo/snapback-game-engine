@@ -10,8 +10,8 @@ mod core {
     pub mod entity;
     pub mod sprite;
     pub mod square;
+    pub mod square2;
     pub mod transform;
-    pub mod entity2;
     pub mod component;
 }
 
@@ -38,7 +38,7 @@ struct Game<'a> {
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
-    entities: Vec<Box<entity::Entity>>,
+    entities: Vec<Rc<entity::Entity2>>,
 }
 
 impl<'a> Game<'a> {
@@ -49,7 +49,7 @@ impl<'a> Game<'a> {
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
 
 
-        let mut entities: Vec<Box<entity::Entity>> = Vec::new();
+        let mut entities: Vec<Rc<entity::Entity2>> = Vec::new();
 /*
         for _ in 0..50 {
             entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
@@ -57,8 +57,10 @@ impl<'a> Game<'a> {
 */
         info!("Creating entities");
 
-        let s = Sprite::make(&mut render_system.sdl_renderer);
-        render_system.register(Rc::new(s));
+        //let s = Sprite::make(&mut render_system.sdl_renderer);
+        //render_system.register(Rc::new(s));
+
+        square2::make_square(&mut render_system);
 
         Game {
             render_system: render_system,
@@ -97,7 +99,7 @@ impl<'a> Game<'a> {
         self.last_tick = now;
 
         for entity in self.entities.iter_mut() {
-            entity.update(ticks);
+            //entity.update(ticks);
         };
     }
 
