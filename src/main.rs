@@ -13,6 +13,7 @@ mod core {
     pub mod transform;
     pub mod transformsystem;
     pub mod component;
+    pub mod system;
 }
 
 mod render {
