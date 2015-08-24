@@ -10,6 +10,7 @@ use sdl2::pixels::Color;
 use sdl2::Sdl;
 
 use core::transformsystem::*;
+use core::system::*;
 
 static SCREEN_WIDTH: u32 = 1280;
 static SCREEN_HEIGHT: u32 = 720;
@@ -39,10 +40,6 @@ impl<'a> RenderSystem<'a> {
         }
     }
 
-    pub fn register(&mut self, sprite: Sprite) {
-        self.drawables.push(sprite);
-    }
-
     pub fn render(&mut self, tick: u64, entities: &Vec<Rc<Entity2>>, transforms: &TransformSystem) {
         self.update_title(tick);
         self.sdl_renderer.clear();
@@ -60,5 +57,15 @@ impl<'a> RenderSystem<'a> {
         let mut window = self.sdl_renderer.window_mut().unwrap();
         let title = format!("Snapback engine - tick {}", tick);
         window.set_title(&title);
+    }
+}
+
+impl<'a> System<Sprite> for RenderSystem<'a> {
+    fn register(&mut self, sprite: Sprite) {
+        self.drawables.push(sprite);
+    }
+
+    fn get(&self, entity: u64) -> &Sprite {
+        &self.drawables[0]
     }
 }
