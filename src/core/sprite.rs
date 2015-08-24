@@ -33,10 +33,10 @@ impl Renderable for Sprite {
 
 impl Sprite {
 	pub fn make<'a>(entity: u64, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
-		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (256, 256)).unwrap();
+		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (16, 16)).unwrap();
 	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
-	        for y in (0..256) {
-	            for x in (0..256) {
+	        for y in (0..16) {
+	            for x in (0..16) {
 	                let offset = y*pitch + x*3;
 	                buffer[offset + 0] = x as u8;
 	                buffer[offset + 1] = y as u8;

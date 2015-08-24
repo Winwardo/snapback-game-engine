@@ -23,9 +23,9 @@ impl System<Transform> for TransformSystem {
 		&self.transforms[0]
 	}
 
-	fn run(&mut self) {
+	fn run(&mut self, ticks: u64) {
 		for t in self.transforms.iter_mut() {
-			t.rotation += 1f32;
+			t.rotation += 90f32 * ticks as f32 / 1000000000f32;
 		}
 	}
 }

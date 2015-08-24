@@ -64,7 +64,9 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        square::make_square(&mut render_system, &mut transform_system);
+        for _ in 0..10 {
+            square::make_square(&mut render_system, &mut transform_system);
+        }
 
         Game {
             render_system: render_system,
@@ -103,11 +105,11 @@ impl<'a> Game<'a> {
         let ticks = now - self.last_tick;
         self.last_tick = now;
 
-        self.transform_system.run();
+        self.transform_system.run(ticks);
+        self.render_system.render(self.last_tick, &self.transform_system);
     }
 
     pub fn render(&mut self) {
-        self.render_system.render(self.last_tick, &self.entities, &self.transform_system);
     }
 
     pub fn close(&self) {

@@ -40,13 +40,13 @@ impl<'a> RenderSystem<'a> {
         }
     }
 
-    pub fn render(&mut self, tick: u64, entities: &Vec<Rc<Entity2>>, transforms: &TransformSystem) {
+    pub fn render(&mut self, tick: u64, transforms: &TransformSystem) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
-        info!("Start drawing all.");
+        //info!("Start drawing all.");
         for drawable in self.drawables.iter() {
-            info!("Drawing.");
+            //info!("Drawing.");
             drawable.draw(&mut self.sdl_renderer, &transforms);
         }
 
@@ -69,7 +69,7 @@ impl<'a> System<Sprite> for RenderSystem<'a> {
         &self.drawables[0]
     }
 
-    fn run(&mut self) {
+    fn run(&mut self, ticks: u64) {
 
     }
 }
