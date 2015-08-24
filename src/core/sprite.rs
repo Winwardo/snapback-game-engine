@@ -3,6 +3,8 @@ extern crate sdl2;
 
 use self::na::{Vec2};
 use super::super::render::renderable::*;
+use sdl2::pixels::PixelFormatEnum;
+use rand::Rng;
 
 use sdl2::rect::Rect;
 
@@ -17,5 +19,28 @@ impl Renderable for Sprite {
 	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>) {
 	    // renderer.copy(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)));
     	renderer.copy_ex(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)), self.rotation as f64, None, (false, false));
+	}
+}
+
+impl Sprite {
+	pub fn make<'a>(renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
+		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (256, 256)).unwrap();
+	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
+	        for y in (0..256) {
+	            for x in (0..256) {
+	                let offset = y*pitch + x*3;
+	                buffer[offset + 0] = x as u8;
+	                buffer[offset + 1] = y as u8;
+	                buffer[offset + 2] = 0;
+	            }
+	        }
+	    }).unwrap();
+
+		Sprite {
+			position: Vec2::new(100f32, 100f32),
+			scaling: Vec2 {x: 1f32, y: 1f32},
+			rotation: 0.0f32,
+			texture: texture
+		}
 	}
 }

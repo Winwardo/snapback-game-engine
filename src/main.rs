@@ -2,11 +2,17 @@
 extern crate env_logger;
 extern crate sdl2;
 extern crate time;
+extern crate rand;
+
+extern crate nalgebra;
 
 mod core {
     pub mod entity;
     pub mod sprite;
     pub mod square;
+    pub mod transform;
+    pub mod entity2;
+    pub mod component;
 }
 
 mod render {
@@ -15,8 +21,10 @@ mod render {
 }
 
 use core::*;
+use core::sprite::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
+use std::rc::Rc;
 
 fn main() {
     env_logger::init().unwrap();
@@ -38,12 +46,19 @@ impl<'a> Game<'a> {
         info!("Setting up game.");
 
         let sdl_context = sdl2::init().unwrap();
-        let render_system = render::renderer::RenderSystem::new(&sdl_context);
+        let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
+
 
         let mut entities: Vec<Box<entity::Entity>> = Vec::new();
-        for _ in 0..5000 {
+/*
+        for _ in 0..50 {
             entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
         }
+*/
+        info!("Creating entities");
+
+        let s = Sprite::make(&mut render_system.sdl_renderer);
+        render_system.register(Rc::new(s));
 
         Game {
             render_system: render_system,
