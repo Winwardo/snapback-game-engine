@@ -10,7 +10,6 @@ mod core {
     pub mod entity;
     pub mod sprite;
     pub mod square;
-    pub mod square2;
     pub mod transform;
     pub mod transformsystem;
     pub mod component;
@@ -63,7 +62,7 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        square2::make_square(&mut render_system, &mut transform_system);
+        square::make_square(&mut render_system, &mut transform_system);
 
         Game {
             render_system: render_system,
