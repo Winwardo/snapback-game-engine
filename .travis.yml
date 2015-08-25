@@ -6,6 +6,9 @@ rust:
 matrix:
   allow_failure:
     - rust: nightly
+env:
+  global:
+    - secure: cxTSmly72goUQyocBC3X/djaz6NmSGOOWQ3gTY4Z9J1/wplFUCR7/VfxwDCdelDQTacoCpLSkZVA2nnhEQWlbdHsstE2h8+N3TUp1VlM8jux3IB5qQ8AO/Cp4NTSf1DJb2m4NtihrUyLuV2Qzfzr0ZqyBWw35fGf1fmFeK4N3varVyiOSWd2CT5LmmqdoKGYXw4cEZnpw/4DvCWOdDNrHazVBSk8F2kq8Txu60rLNRwk3BoVrnMRCnM9iW3RwxtCNPG/lmob2DI1O9qwkg7XGU/ZZZkjXMlIjRbHPEVCJcIUr3C0VrBDatKHsdxmjO5ehEzrxfn69lCqWXLlzow1yMn5wJzEhnDXdg/P6opndZEfB0Q9zpPjAh9u+rDBd1pOLG32vtCWqWA8EqGm4/P5QWeAjHSUckjvoiDbUitEnbJvuVsXOPuqYqrGW42x/V7XQBUzEZfwypbl9/Dj0XTfjHSlnKClfYoTttAH6cRmwd1WfHwEDLfSd2tAU/ujjO8LdJAI1ccMgxcbxcgJReEHPXS0S24fHg373EbMwJ89LvnSNRP+UFwt1UV9LSf+kjZWL2Hky6JoenxAnXu34d8gVyOgiUP8PfHlRJF+8qX0DMveyvEmDkiv//ccAmyYJ3ZlYCM0luSNrlmtM0sMYvN0jWNwPAzcllHGFEs6NE5EvmU=
 script:
   - cargo build --verbose
   - cargo test --verbose
@@ -22,6 +25,7 @@ install:
   - sudo apt-get install libjpeg8-dev libgpgme11-dev libsndfile1-dev libopenal-dev libjpeg62
 sudo: required
 after_success: |
+  curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
   sudo apt-get install libcurl4-openssl-dev libelf-dev libdw-dev &&
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz && mkdir kcov-master/build && cd kcov-master/build && cmake .. && make &&
