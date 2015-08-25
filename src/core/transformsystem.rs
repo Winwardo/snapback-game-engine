@@ -1,5 +1,6 @@
 extern crate nalgebra as na;
 
+use core::entity::*;
 use core::transform::*;
 use core::system::*;
 
@@ -18,8 +19,8 @@ impl System<Transform> for TransformSystem {
 		self.transforms.push(transform);
 	}
 
-	fn get(&self, entity: u32) -> &Transform {
-		&self.transforms[entity as usize]
+	fn get(&self, entity: Entity) -> &Transform {
+		&self.transforms[entity.id]
 	}
 
 	fn run(&mut self, ticks: u64) {

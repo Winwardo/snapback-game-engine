@@ -1,3 +1,5 @@
+use core::entity::*;
+
 pub trait Component {
-	fn entity(self) -> u32;
+	fn entity(self) -> Entity;
 }

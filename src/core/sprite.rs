@@ -1,6 +1,7 @@
 extern crate nalgebra as na;
 extern crate sdl2;
 
+use core::entity::*;
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
 use core::transformsystem::*;
@@ -9,7 +10,7 @@ use core::system::*;
 use sdl2::rect::Rect;
 
 pub struct Sprite {
-	pub entity: u32,
+	pub entity: Entity,
 	pub texture: sdl2::render::Texture,
 }
 
@@ -34,7 +35,7 @@ impl Renderable for Sprite {
 }
 
 impl Sprite {
-	pub fn make<'a>(entity: u32, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
+	pub fn make<'a>(entity: Entity, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
 		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (16, 16)).unwrap();
 	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 	        for y in (0..16) {

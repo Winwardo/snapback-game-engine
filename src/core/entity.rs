@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 #[derive(Copy, Clone)]
 pub struct Entity {
-	pub id: u32,
+	pub id: usize,
 }
 
 /// Master of all existing entities.
@@ -26,7 +26,7 @@ impl Entities {
 			self.active[new_id] = true;
 		}
 
-		Entity { id: new_id as u32, }
+		Entity { id: new_id, }
 	}
 
 	fn first_inactive_space(&self) -> usize {

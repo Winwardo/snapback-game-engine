@@ -1,6 +1,7 @@
 extern crate sdl2;
 
 use super::renderable::*;
+use core::entity::*;
 use core::sprite::*;
 
 use sdl2::pixels::Color;
@@ -62,8 +63,8 @@ impl<'a> System<Sprite> for RenderSystem<'a> {
         self.drawables.push(sprite);
     }
 
-    fn get(&self, entity: u32) -> &Sprite {
-        &self.drawables[entity as usize]
+    fn get(&self, entity: Entity) -> &Sprite {
+        &self.drawables[entity.id]
     }
 
     fn run(&mut self, ticks: u64) {
