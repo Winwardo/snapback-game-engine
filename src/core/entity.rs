@@ -1,37 +1,32 @@
 use std::rc::Rc;
 
+#[derive(Copy, Clone)]
 pub struct Entity {
 	pub id: u32,
 }
 
 /// Master of all existing entities.
 pub struct Entities {
-	entities: Vec<Rc<Entity>>,
 	active: Vec<bool>
 }
 
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
-			entities: Vec::with_capacity(1024),
 			active: Vec::with_capacity(1024),
 		}
 	}
 
-	pub fn create_entity(&mut self) -> Rc<Entity> {
+	pub fn create_entity(&mut self) -> Entity {
 		let new_id = self.first_inactive_space();
-		let result = Rc::new(
-			Entity { id: new_id as u32, });
 
-		if new_id >= self.entities.len() {
-			self.entities.push(result.clone());
+		if new_id >= self.active.len() {
 			self.active.push(true);
 		} else {
-			self.entities[new_id] = result.clone();
 			self.active[new_id] = true;
 		}
 
-		result
+		Entity { id: new_id as u32, }
 	}
 
 	fn first_inactive_space(&self) -> usize {
