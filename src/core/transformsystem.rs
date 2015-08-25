@@ -18,8 +18,8 @@ impl System<Transform> for TransformSystem {
 		self.transforms.push(transform);
 	}
 
-	fn get(&self, entity: u64) -> &Transform {
-		&self.transforms[0]
+	fn get(&self, entity: u32) -> &Transform {
+		&self.transforms[entity as usize]
 	}
 
 	fn run(&mut self, ticks: u64) {

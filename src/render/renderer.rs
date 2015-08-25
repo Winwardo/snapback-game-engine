@@ -62,8 +62,8 @@ impl<'a> System<Sprite> for RenderSystem<'a> {
         self.drawables.push(sprite);
     }
 
-    fn get(&self, entity: u64) -> &Sprite {
-        &self.drawables[0]
+    fn get(&self, entity: u32) -> &Sprite {
+        &self.drawables[entity as usize]
     }
 
     fn run(&mut self, ticks: u64) {

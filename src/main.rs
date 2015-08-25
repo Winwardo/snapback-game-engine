@@ -26,6 +26,7 @@ use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
 use std::rc::Rc;
 use core::system::*;
+use core::entity::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -40,7 +41,7 @@ struct Game<'a> {
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
-    entities: Vec<Rc<entity::Entity>>,
+    entities: Entities,
 }
 
 impl<'a> Game<'a> {
@@ -50,9 +51,7 @@ impl<'a> Game<'a> {
         let sdl_context = sdl2::init().unwrap();
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
         let mut transform_system = core::transformsystem::TransformSystem::new();
-
-
-        let entities: Vec<Rc<entity::Entity>> = Vec::new();
+        let mut entities = Entities::new();
 /*
         for _ in 0..50 {
             entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
@@ -64,7 +63,7 @@ impl<'a> Game<'a> {
         //render_system.register(Rc::new(s));
 
         for _ in 0..1000 {
-            square::make_square(&mut render_system, &mut transform_system);
+            square::make_square(&mut entities, &mut render_system, &mut transform_system);
         }
 
         Game {

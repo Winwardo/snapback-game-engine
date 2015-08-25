@@ -9,14 +9,12 @@ use core::system::*;
 use sdl2::rect::Rect;
 
 pub struct Sprite {
-	pub entity: u64,
+	pub entity: u32,
 	pub texture: sdl2::render::Texture,
 }
 
 impl Renderable for Sprite {
-	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, transform_system: &TransformSystem) {
-	    // renderer.copy(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)));
-    	
+	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, transform_system: &TransformSystem) {    	
 	    // find rotation in transforms
 	    let transform = transform_system.get(self.entity);
 
@@ -36,7 +34,7 @@ impl Renderable for Sprite {
 }
 
 impl Sprite {
-	pub fn make<'a>(entity: u64, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
+	pub fn make<'a>(entity: u32, renderer: &mut sdl2::render::Renderer<'a>) -> Sprite {
 		let mut texture = renderer.create_texture_streaming(PixelFormatEnum::RGB24, (16, 16)).unwrap();
 	    texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 	        for y in (0..16) {

@@ -1,3 +1,3 @@
 pub trait Component {
-	fn entity(self) -> u64;
+	fn entity(self) -> u32;
 }
