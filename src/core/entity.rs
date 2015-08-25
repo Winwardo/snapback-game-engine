@@ -1,13 +1,11 @@
 extern crate time;
 
-use std::rc::Rc;
-
-pub struct Entity2 {
+pub struct Entity {
 	id: u64,
 }
 
-impl Entity2 {
-	pub fn new() -> Entity2 {
-		Entity2 { id: time::precise_time_ns() }
+impl Entity {
+	pub fn new() -> Entity {
+		Entity { id: time::precise_time_ns() }
 	}
 }

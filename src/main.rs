@@ -22,7 +22,6 @@ mod render {
 }
 
 use core::*;
-use core::sprite::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
 use std::rc::Rc;
@@ -41,7 +40,7 @@ struct Game<'a> {
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
-    entities: Vec<Rc<entity::Entity2>>,
+    entities: Vec<Rc<entity::Entity>>,
 }
 
 impl<'a> Game<'a> {
@@ -53,7 +52,7 @@ impl<'a> Game<'a> {
         let mut transform_system = core::transformsystem::TransformSystem::new();
 
 
-        let mut entities: Vec<Rc<entity::Entity2>> = Vec::new();
+        let entities: Vec<Rc<entity::Entity>> = Vec::new();
 /*
         for _ in 0..50 {
             entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
@@ -64,7 +63,7 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        for _ in 0..10 {
+        for _ in 0..1000 {
             square::make_square(&mut render_system, &mut transform_system);
         }
 

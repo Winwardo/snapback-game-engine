@@ -1,8 +1,5 @@
 extern crate sdl2;
 
-use std::rc::Rc;
-
-use core::entity::*;
 use super::renderable::*;
 use core::sprite::*;
 

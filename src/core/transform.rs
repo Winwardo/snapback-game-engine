@@ -1,7 +1,5 @@
 use core::component::*;
-use core::entity::*;
 use nalgebra::{Vec2};
-use std::rc::Rc;
 
 pub struct Transform {
 	pub entity: u64,

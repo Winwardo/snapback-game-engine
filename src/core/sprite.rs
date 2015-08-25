@@ -1,12 +1,8 @@
 extern crate nalgebra as na;
 extern crate sdl2;
 
-use core::entity::*;
-use self::na::{Vec2};
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
-use rand::Rng;
-use std::rc::Rc;
 use core::transformsystem::*;
 use core::system::*;
 
@@ -14,9 +10,6 @@ use sdl2::rect::Rect;
 
 pub struct Sprite {
 	pub entity: u64,
-	pub position: Vec2<f32>,
-	pub scaling: Vec2<f32>,
-	pub rotation: f32,
 	pub texture: sdl2::render::Texture,
 }
 
@@ -27,7 +20,18 @@ impl Renderable for Sprite {
 	    // find rotation in transforms
 	    let transform = transform_system.get(self.entity);
 
-    	renderer.copy_ex(&self.texture, None, Some(Rect::new_unwrap(self.position.x as i32, self.position.y as i32, 32, 32)), transform.rotation as f64, None, (false, false));
+    	renderer.copy_ex(
+    		&self.texture,
+    		None,
+    		Some(
+    			Rect::new_unwrap(
+    				transform.position.x as i32,
+    				transform.position.y as i32,
+    				32,
+    				32)),
+    		transform.rotation as f64,
+    		None,
+    		(false, false));
 	}
 }
 
@@ -47,9 +51,6 @@ impl Sprite {
 
 		Sprite {
 			entity: entity,
-			position: Vec2::new(100f32, 100f32),
-			scaling: Vec2 {x: 1f32, y: 1f32},
-			rotation: 0.0f32,
 			texture: texture
 		}
 	}

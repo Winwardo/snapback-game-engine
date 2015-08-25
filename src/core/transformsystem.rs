@@ -1,7 +1,6 @@
 extern crate nalgebra as na;
 
 use core::transform::*;
-use self::na::{Vec2};
 use core::system::*;
 
 pub struct TransformSystem {
