@@ -67,7 +67,7 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        for _ in 0..10 {
+        for _ in 0..25000 {
             square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses);
         }
 
@@ -110,10 +110,15 @@ impl<'a> Game<'a> {
         self.last_tick = now;
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
-
-        self.transform_system.run(ticks);
+//
+        for _ in 0..100 {
+            //self.transform_system.run(ticks);
+            core::transformsystem::process_rotations(ticks_as_seconds, &self.entities, &mut self.transform_system);
+        }
         self.render_system.render(self.last_tick, &self.transform_system);
-        process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses)
+        for _ in 0..100 {
+            process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses);
+        }
     }
 
     pub fn render(&mut self) {

@@ -5,7 +5,7 @@ use core::transform::*;
 use core::system::*;
 
 pub struct TransformSystem {
-	transforms: Vec<Transform>,
+	pub transforms: Vec<Transform>,
 }
 
 impl TransformSystem {
@@ -30,6 +30,19 @@ impl System<Transform> for TransformSystem {
 	fn run(&mut self, ticks: u64) {
 		for t in self.transforms.iter_mut() {
 			t.rotation += 90f32 * ticks as f32 / 1000000000f32;
+		}
+	}
+}
+
+pub fn process_rotations(ticks: f32, entities: &Entities, transforms: &mut TransformSystem) {
+	for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
+		if entity.has_flags(C_TRANSFORM) {
+			//let mut transform2 = transforms.get_mut(*entity);
+
+			//let mut q = transform.rotation;
+			//unsafe{ q += 1f32; };
+
+			transform.rotation += 0f32;//90f32 * ticks as f32;
 		}
 	}
 }

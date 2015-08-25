@@ -3,13 +3,10 @@ use core::transformsystem::*;
 use core::system::*;
 
 pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut TransformSystem, masses: &Masses) {
-	for x in 0..entities.components.len() {
-		let entity = Entity { id: x, };
-
-		let components = entities.get_flags_for_entity(entity);
-		if components.contains(C_MASS | C_TRANSFORM) {
-			let mut transform = transforms.get_mut(entity);
-			let mass = masses.get(entity);
+	for entity in &entities.entities {
+		if entity.has_flags(C_MASS | C_TRANSFORM) {
+			let mut transform = transforms.get_mut(*entity);
+			let mass = masses.get(*entity);
 
 			transform.position.y += mass as f32 * ticks;
 		}
