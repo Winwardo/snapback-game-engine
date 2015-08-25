@@ -23,6 +23,10 @@ impl System<Transform> for TransformSystem {
 		&self.transforms[entity.id]
 	}
 
+	fn get_mut(&mut self, entity: Entity) -> &mut Transform {
+		&mut self.transforms[entity.id]
+	}
+
 	fn run(&mut self, ticks: u64) {
 		for t in self.transforms.iter_mut() {
 			t.rotation += 90f32 * ticks as f32 / 1000000000f32;

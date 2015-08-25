@@ -67,6 +67,10 @@ impl<'a> System<Sprite> for RenderSystem<'a> {
         &self.drawables[entity.id]
     }
 
+    fn get_mut(&mut self, entity: Entity) -> &mut Sprite {
+        &mut self.drawables[entity.id]
+    }
+
     fn run(&mut self, ticks: u64) {
 
     }

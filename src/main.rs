@@ -3,6 +3,7 @@ extern crate env_logger;
 extern crate sdl2;
 extern crate time;
 extern crate rand;
+#[macro_use] extern crate bitflags;
 
 extern crate nalgebra;
 
@@ -14,6 +15,7 @@ mod core {
     pub mod transformsystem;
     pub mod component;
     pub mod system;
+    pub mod physicssystem;
 }
 
 mod render {
@@ -26,6 +28,7 @@ use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
 use std::rc::Rc;
 use core::system::*;
+use core::physicssystem::*;
 use core::entity::*;
 
 fn main() {
@@ -38,6 +41,7 @@ fn main() {
 struct Game<'a> {
     render_system: render::renderer::RenderSystem<'a>,
     transform_system: core::transformsystem::TransformSystem,
+    masses: Masses,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
@@ -51,6 +55,7 @@ impl<'a> Game<'a> {
         let sdl_context = sdl2::init().unwrap();
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
         let mut transform_system = core::transformsystem::TransformSystem::new();
+        let mut masses = Masses { masses: vec![], };
         let mut entities = Entities::new();
 /*
         for _ in 0..50 {
@@ -62,13 +67,14 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        for _ in 0..1000 {
-            square::make_square(&mut entities, &mut render_system, &mut transform_system);
+        for _ in 0..10 {
+            square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses);
         }
 
         Game {
             render_system: render_system,
             transform_system: transform_system,
+            masses: masses,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
@@ -103,8 +109,11 @@ impl<'a> Game<'a> {
         let ticks = now - self.last_tick;
         self.last_tick = now;
 
+        let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
+
         self.transform_system.run(ticks);
         self.render_system.render(self.last_tick, &self.transform_system);
+        process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses)
     }
 
     pub fn render(&mut self) {
