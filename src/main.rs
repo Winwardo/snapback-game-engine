@@ -13,9 +13,12 @@ mod core {
     pub mod square;
     pub mod transform;
     pub mod transformsystem;
-    pub mod component;
+    #[macro_use] pub mod component;
     pub mod system;
     pub mod physicssystem;
+    pub mod transforms {
+        pub mod position;
+    }
 }
 
 mod render {
@@ -30,6 +33,7 @@ use std::rc::Rc;
 use core::system::*;
 use core::physicssystem::*;
 use core::entity::*;
+use core::transforms::position::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -38,18 +42,19 @@ fn main() {
     game.close();
 }
 
-struct Game<'a> {
-    render_system: render::renderer::RenderSystem<'a>,
+struct Game {
+    render_system: render::renderer::RenderSystem,
     transform_system: core::transformsystem::TransformSystem,
     masses: Masses,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
     entities: Entities,
+    positions: Positions,
 }
 
-impl<'a> Game<'a> {
-    pub fn new() -> Game<'a> {
+impl Game {
+    pub fn new() -> Game {
         info!("Setting up game.");
 
         let sdl_context = sdl2::init().unwrap();
@@ -57,6 +62,7 @@ impl<'a> Game<'a> {
         let mut transform_system = core::transformsystem::TransformSystem::new();
         let mut masses = Masses { masses: vec![], };
         let mut entities = Entities::new();
+        let mut positions = Positions::new();
 /*
         for _ in 0..50 {
             entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
@@ -67,8 +73,11 @@ impl<'a> Game<'a> {
         //let s = Sprite::make(&mut render_system.sdl_renderer);
         //render_system.register(Rc::new(s));
 
-        for _ in 0..25000 {
-            square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses);
+        for _ in 0..12500 {
+            square::make_square_mass(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
+        }
+        for _ in 0..12500 {
+            //square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
         }
 
         Game {
@@ -79,10 +88,14 @@ impl<'a> Game<'a> {
             is_running: true,
             sdl_context: sdl_context,
             entities: entities,
+            positions: positions,
         }
     }
 
     pub fn run(&mut self) {
+        info!("{}", std::mem::size_of::<Entity>());
+        info!("{}", std::mem::size_of::<Option<Entity>>());
+
         while self.is_running {
             self.check_events();
             self.tick();
@@ -111,14 +124,18 @@ impl<'a> Game<'a> {
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
 //
-        for _ in 0..100 {
+
+        for _ in 0..1000 {
             //self.transform_system.run(ticks);
-            core::transformsystem::process_rotations(ticks_as_seconds, &self.entities, &mut self.transform_system);
+            //core::transformsystem::move_right(ticks_as_seconds, &self.entities, &mut self.transform_system);
+            core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         }
-        self.render_system.render(self.last_tick, &self.transform_system);
-        for _ in 0..100 {
-            process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses);
+        for _ in 0..1 {
+            //process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses);
+            process_physics2(ticks_as_seconds, &mut self.entities, &mut self.positions, &self.masses);
         }
+
+        self.render_system.render(self.last_tick, &self.transform_system, &self.positions);
     }
 
     pub fn render(&mut self) {

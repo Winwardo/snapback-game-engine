@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 bitflags! {
     flags ComponentFlag: u32 {
+        const C_EMPTY    		= 0b00000000,
         const C_UNUSED    		= 0b00000001,
         const C_SPRITE       	= 0b00000010,
         const C_MASS	     	= 0b00000100,
@@ -19,18 +20,24 @@ impl Entity {
 	pub fn has_flags(self, flags: ComponentFlag) -> bool {
 		self.flags.contains(flags)
 	}
+
+	pub fn blank() -> Entity {
+		Entity { id: 0, flags: C_EMPTY }
+	}
 }
 
-/// Master of all existing entities.
 pub struct Entities {
 	pub entities: Vec<Entity>,
 }
 
 impl Entities {
 	pub fn new() -> Entities {
-		Entities {
+		let mut entities = Entities {
 			entities: Vec::with_capacity(1024),
-		}
+		};
+
+		entities.create_entity(C_EMPTY);
+		entities
 	}
 
 	pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {

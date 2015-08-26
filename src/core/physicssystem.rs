@@ -1,6 +1,8 @@
 use core::entity::*;
 use core::transformsystem::*;
+use core::transforms::position::*;
 use core::system::*;
+use core::component::*;
 
 pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut TransformSystem, masses: &Masses) {
 	for entity in &entities.entities {
@@ -12,6 +14,16 @@ pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut Tra
 		}
 	}
 }
+
+pub fn process_physics2(ticks: f32, entities: &mut Entities, positions: &mut Positions, masses: &Masses) {
+	for x in entities.entities.iter().filter(|x| { x.has_flags(C_MASS | C_TRANSFORM) }) {
+		let mut position = positions.get_mut(*x);
+		let mass = masses.get(*x);
+
+		position.value.y += mass as f32 * ticks;
+	};
+}
+
 
 pub struct Masses {
 	pub masses: Vec<u8>,

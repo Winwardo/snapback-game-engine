@@ -6,6 +6,8 @@ use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
 use core::transformsystem::*;
 use core::system::*;
+use core::transforms::position::*;
+use core::component::*;
 
 use sdl2::rect::Rect;
 
@@ -15,17 +17,18 @@ pub struct Sprite {
 }
 
 impl Renderable for Sprite {
-	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, transform_system: &TransformSystem) {    	
+	fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, transform_system: &TransformSystem, positions: &Positions) {    	
 	    // find rotation in transforms
 	    let transform = transform_system.get(self.entity);
+	    let position = positions.get(self.entity);
 
     	renderer.copy_ex(
     		&self.texture,
     		None,
     		Some(
     			Rect::new_unwrap(
-    				transform.position.x as i32,
-    				transform.position.y as i32,
+    				position.value.x as i32,
+    				position.value.y as i32,
     				32,
     				32)),
     		transform.rotation as f64,

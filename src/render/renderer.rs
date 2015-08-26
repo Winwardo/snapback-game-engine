@@ -7,6 +7,7 @@ use core::sprite::*;
 use sdl2::pixels::Color;
 use sdl2::Sdl;
 
+use core::transforms::position::*;
 use core::transformsystem::*;
 use core::system::*;
 
@@ -14,13 +15,13 @@ static SCREEN_WIDTH: u32 = 1280;
 static SCREEN_HEIGHT: u32 = 720;
 static WINDOW_TITLE: &'static str = "Snapback engine";
 
-pub struct RenderSystem<'a> {
-    pub sdl_renderer: sdl2::render::Renderer<'a>,
+pub struct RenderSystem {
+    pub sdl_renderer: sdl2::render::Renderer<'static>,
     drawables: Vec<Sprite>,
 }
 
-impl<'a> RenderSystem<'a> {
-    pub fn new(sdl_context: &Sdl) -> RenderSystem<'a> {
+impl RenderSystem {
+    pub fn new(sdl_context: &Sdl) -> RenderSystem {
         let video_subsystem = sdl_context.video().unwrap();
 
         let window = video_subsystem.window(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -38,14 +39,14 @@ impl<'a> RenderSystem<'a> {
         }
     }
 
-    pub fn render(&mut self, tick: u64, transforms: &TransformSystem) {
+    pub fn render(&mut self, tick: u64, transforms: &TransformSystem, positions: &Positions) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
         //info!("Start drawing all.");
         for drawable in self.drawables.iter() {
             //info!("Drawing.");
-            drawable.draw(&mut self.sdl_renderer, &transforms);
+            drawable.draw(&mut self.sdl_renderer, &transforms, &positions);
         }
 
         self.sdl_renderer.present();
@@ -58,7 +59,7 @@ impl<'a> RenderSystem<'a> {
     }
 }
 
-impl<'a> System<Sprite> for RenderSystem<'a> {
+impl System<Sprite> for RenderSystem {
     fn register(&mut self, sprite: Sprite) {
         self.drawables.push(sprite);
     }

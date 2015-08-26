@@ -42,7 +42,34 @@ pub fn process_rotations(ticks: f32, entities: &Entities, transforms: &mut Trans
 			//let mut q = transform.rotation;
 			//unsafe{ q += 1f32; };
 
-			transform.rotation += 0f32;//90f32 * ticks as f32;
+			transform.rotation += 90f32 * ticks as f32;
 		}
 	}
+}
+
+pub fn move_right(ticks: f32, entities: &Entities, transforms: &mut TransformSystem) {
+	for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
+		if entity.has_flags(C_TRANSFORM) {
+			//let mut transform2 = transforms.get_mut(*entity);
+
+			//let mut q = transform.rotation;
+			//unsafe{ q += 1f32; };
+
+			transform.position.x += 1f32;
+		}
+	}
+}
+
+pub fn move_right2(ticks: f32, transforms: &mut TransformSystem) {
+	//for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
+	//	if entity.has_flags(C_TRANSFORM) {
+			//let mut transform2 = transforms.get_mut(*entity);
+
+			//let mut q = transform.rotation;
+			//unsafe{ q += 1f32; };
+
+		for transform in &mut transforms.transforms {
+			transform.position.x += 1f32;
+		}
+	//}
 }
