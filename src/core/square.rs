@@ -8,6 +8,7 @@ use core::entity::*;
 use core::physicssystem::*;
 use nalgebra::{Vec2};
 use core::component::*;
+use core::mass::*;
 
 extern crate time;
 
@@ -50,8 +51,7 @@ pub fn make_square_mass<'a>(
 	transform.position.x += entity.id as f32;
 	transform_system.register(transform);
 
-	let mass = entity.id as u8;
-	masses.register(entity, mass);
+	masses.register(entity, Mass { value: entity.id as f32, });
 
 	positions.register(entity, Position{ value: Vec2 { x: entity.id as f32, y: 0f32 }, });
 

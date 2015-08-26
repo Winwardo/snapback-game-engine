@@ -6,4 +6,4 @@ pub struct Position {
 	pub value: Vec2<f32>,
 }
 
-component_super!(Position, Positions, position);
+components!(Position, Positions);

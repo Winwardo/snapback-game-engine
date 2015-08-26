@@ -16,6 +16,7 @@ mod core {
     #[macro_use] pub mod component;
     pub mod system;
     pub mod physicssystem;
+    pub mod mass;
     pub mod transforms {
         pub mod position;
     }
@@ -34,6 +35,8 @@ use core::system::*;
 use core::physicssystem::*;
 use core::entity::*;
 use core::transforms::position::*;
+use core::component::*;
+use core::mass::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -60,18 +63,11 @@ impl Game {
         let sdl_context = sdl2::init().unwrap();
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
         let mut transform_system = core::transformsystem::TransformSystem::new();
-        let mut masses = Masses { masses: vec![], };
         let mut entities = Entities::new();
+        let mut masses = Masses::new();
         let mut positions = Positions::new();
-/*
-        for _ in 0..50 {
-            entities.push(Box::new(square::Square::new(&render_system.sdl_renderer)));
-        }
-*/
-        info!("Creating entities");
 
-        //let s = Sprite::make(&mut render_system.sdl_renderer);
-        //render_system.register(Rc::new(s));
+        info!("Creating entities");
 
         for _ in 0..12500 {
             square::make_square_mass(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);

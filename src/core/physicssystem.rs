@@ -3,6 +3,7 @@ use core::transformsystem::*;
 use core::transforms::position::*;
 use core::system::*;
 use core::component::*;
+use core::mass::*;
 
 pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut TransformSystem, masses: &Masses) {
 	for entity in &entities.entities {
@@ -10,7 +11,7 @@ pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut Tra
 			let mut transform = transforms.get_mut(*entity);
 			let mass = masses.get(*entity);
 
-			transform.position.y += mass as f32 * ticks;
+			transform.position.y += mass.value * ticks;
 		}
 	}
 }
@@ -20,11 +21,11 @@ pub fn process_physics2(ticks: f32, entities: &mut Entities, positions: &mut Pos
 		let mut position = positions.get_mut(*x);
 		let mass = masses.get(*x);
 
-		position.value.y += mass as f32 * ticks;
+		position.value.y += mass.value * ticks;
 	};
 }
 
-
+/*
 pub struct Masses {
 	pub masses: Vec<u8>,
 }
@@ -42,3 +43,4 @@ impl Masses {
 		self.masses[entity.id]
 	}
 }
+*/

@@ -33,37 +33,26 @@ pub trait Components<T> {
 }
 
 macro_rules! components {
-	( $x:ident, $y:ty ) => {
-		impl Components<$y> for Positions {
-			fn entities_mut(&mut self) -> &mut Vec<Entity> { &mut self.entities }
-			fn components_mut(&mut self) -> &mut Vec<$y> { &mut self.$x }
-			fn entities(&self) -> &Vec<Entity> { &self.entities }
-			fn components(&self) -> &Vec<$y> { &self.$x }
-		}
-	}
-}
-
-macro_rules! component_super {
-	( $struct_name:ty, $vec_name:ident, $value:ident ) => {
+	( $struct_name:ty, $vec_name:ident ) => {
 		pub struct $vec_name {
-			pub $value: Vec<$struct_name>,
+			components: Vec<$struct_name>,
 			pub entities: Vec<Entity>,
 		}
 
 		impl $vec_name {
 			pub fn new() -> $vec_name {
 				$vec_name {
-					$value: Vec::new(),
-					entities: Vec::new(),
+					components:	Vec::new(),
+					entities:	Vec::new(),
 				}
 			}
 		}
 
 		impl Components<$struct_name> for $vec_name {
-			fn entities_mut(&mut self) -> &mut Vec<Entity> { &mut self.entities }
-			fn components_mut(&mut self) -> &mut Vec<$struct_name> { &mut self.$value }
-			fn entities(&self) -> &Vec<Entity> { &self.entities }
-			fn components(&self) -> &Vec<$struct_name> { &self.$value }
+			#[inline] fn entities_mut(&mut self) -> &mut Vec<Entity> { &mut self.entities }
+			#[inline] fn components_mut(&mut self) -> &mut Vec<$struct_name> { &mut self.components }
+			#[inline] fn entities(&self) -> &Vec<Entity> { &self.entities }
+			#[inline] fn components(&self) -> &Vec<$struct_name> { &self.components }
 		}
 	}
 }
