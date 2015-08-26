@@ -12,16 +12,7 @@ pub trait Components<T> {
 	fn entities(&self) -> &Vec<Entity>;
 	fn components(&self) -> &Vec<T>;	
 
-	fn register(&mut self, entity: Entity, component: T) {
-		self.components_mut().push(component);
-
-		let mut entities = self.entities_mut();
-
-		while entities.len() <= entity.id {
-			entities.push(Entity::blank());
-		}
-		entities[entity.id] = entity;
-	}
+	fn register(&mut self, entities_master: &mut Entities, entity: Entity, component: T,);
 
 	fn get_mut(&mut self, entity: Entity) -> &mut T {
 		return &mut self.components_mut()[entity.id];
@@ -33,7 +24,7 @@ pub trait Components<T> {
 }
 
 macro_rules! components {
-	( $struct_name:ty, $vec_name:ident ) => {
+	( $struct_name:ty, $vec_name:ident, $comp_flag:ident ) => {
 		pub struct $vec_name {
 			components: Vec<$struct_name>,
 			pub entities: Vec<Entity>,
@@ -53,6 +44,19 @@ macro_rules! components {
 			#[inline] fn components_mut(&mut self) -> &mut Vec<$struct_name> { &mut self.components }
 			#[inline] fn entities(&self) -> &Vec<Entity> { &self.entities }
 			#[inline] fn components(&self) -> &Vec<$struct_name> { &self.components }
+
+
+			fn register(&mut self, entities_master: &mut Entities, entity: Entity, component: $struct_name) {
+				self.components_mut().push(component);
+				let mut entities = self.entities_mut();
+
+				while entities.len() <= entity.id {
+					entities.push(Entity::blank());
+				}
+				entities[entity.id] = entity;
+
+				entities_master.set_flag(entity, $comp_flag);
+			}
 		}
 	}
 }

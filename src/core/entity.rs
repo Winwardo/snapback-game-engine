@@ -3,7 +3,7 @@ use std::rc::Rc;
 bitflags! {
     flags ComponentFlag: u32 {
         const C_EMPTY    		= 0b00000000,
-        const C_UNUSED    		= 0b00000001,
+        const C_POSITION   		= 0b00000001,
         const C_SPRITE       	= 0b00000010,
         const C_MASS	     	= 0b00000100,
         const C_TRANSFORM    	= 0b00001000,
@@ -38,6 +38,10 @@ impl Entities {
 
 		entities.create_entity(C_EMPTY);
 		entities
+	}
+
+	pub fn set_flag(&mut self, entity: Entity, flag: ComponentFlag) {
+		self.entities[entity.id].flags.insert(flag);
 	}
 
 	pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {

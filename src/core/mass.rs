@@ -5,4 +5,4 @@ pub struct Mass {
 	pub value: f32,
 }
 
-components!(Mass, Masses);
+components!(Mass, Masses, C_MASS);

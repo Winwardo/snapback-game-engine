@@ -70,10 +70,12 @@ impl Game {
         info!("Creating entities");
 
         for _ in 0..12500 {
-            square::make_square_mass(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
-        }
-        for _ in 0..12500 {
-            //square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
+            let ent = square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
+
+            if true {
+                masses.register(&mut entities, ent, Mass{ value: 10f32 });
+            }
+
         }
 
         Game {
