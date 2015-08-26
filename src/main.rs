@@ -69,11 +69,11 @@ impl Game {
 
         info!("Creating entities");
 
-        for x in 0..25000 {
+        for x in 0..5000 {
             let ent = square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
 
-            if x > 12500 {
-                masses.register(&mut entities, ent, Mass{ value: 10f32 });
+            if x < 12500 {
+                masses.register(&mut entities, ent, Mass{ value: 100f32 });
             }
         }
 
@@ -123,15 +123,9 @@ impl Game {
         self.masses.expand(en);
         self.positions.expand(en);
 
-        for _ in 0..1000 {
-            //self.transform_system.run(ticks);
-            //core::transformsystem::move_right(ticks_as_seconds, &self.entities, &mut self.transform_system);
-            core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
-        }
-        for _ in 0..100 {
-            //process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses);
-            process_physics2(ticks_as_seconds, &mut self.entities, &mut self.positions, &self.masses);
-        }
+        core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
+        process_physics(ticks_as_seconds, &mut self.entities, &mut self.positions, &self.masses);
+        process_ylimit(ticks_as_seconds, &mut self.positions);
 
         self.render_system.render(self.last_tick, &self.transform_system, &self.positions);
     }

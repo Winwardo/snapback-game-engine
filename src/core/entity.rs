@@ -1,4 +1,6 @@
 use std::rc::Rc;
+use std::iter::Filter;
+use std::slice::Iter;
 
 bitflags! {
     flags ComponentFlag: u32 {
@@ -70,5 +72,9 @@ impl Entities {
 		}
 
 		return active_len;
+	}
+
+	pub fn with_flags(&mut self, flags: ComponentFlag) -> Vec<&Entity> {
+		self.entities.iter().filter(|x| x.has_flags(flags)).collect::<Vec<&Entity>>()
 	}
 }
