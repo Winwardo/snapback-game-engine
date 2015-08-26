@@ -36,12 +36,16 @@ impl Entities {
 			entities: Vec::with_capacity(1024),
 		};
 
-		entities.create_entity(C_EMPTY);
+		//entities.create_entity(C_EMPTY);
 		entities
 	}
 
 	pub fn set_flag(&mut self, entity: Entity, flag: ComponentFlag) {
 		self.entities[entity.id].flags.insert(flag);
+	}
+
+	pub fn get_new(&mut self) -> Entity {
+		self.create_entity(C_EMPTY)
 	}
 
 	pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {

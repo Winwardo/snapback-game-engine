@@ -69,13 +69,12 @@ impl Game {
 
         info!("Creating entities");
 
-        for _ in 0..12500 {
+        for x in 0..25000 {
             let ent = square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
 
-            if true {
+            if x > 12500 {
                 masses.register(&mut entities, ent, Mass{ value: 10f32 });
             }
-
         }
 
         Game {
@@ -91,9 +90,6 @@ impl Game {
     }
 
     pub fn run(&mut self) {
-        info!("{}", std::mem::size_of::<Entity>());
-        info!("{}", std::mem::size_of::<Option<Entity>>());
-
         while self.is_running {
             self.check_events();
             self.tick();
@@ -121,14 +117,18 @@ impl Game {
         self.last_tick = now;
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
-//
+//        
+        let mut en = Entity::blank();
+        en.id = self.entities.entities.len();
+        self.masses.expand(en);
+        self.positions.expand(en);
 
         for _ in 0..1000 {
             //self.transform_system.run(ticks);
             //core::transformsystem::move_right(ticks_as_seconds, &self.entities, &mut self.transform_system);
             core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         }
-        for _ in 0..1 {
+        for _ in 0..100 {
             //process_physics(ticks_as_seconds, &mut self.entities, &mut self.transform_system, &self.masses);
             process_physics2(ticks_as_seconds, &mut self.entities, &mut self.positions, &self.masses);
         }

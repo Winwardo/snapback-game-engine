@@ -17,7 +17,7 @@ pub fn process_physics(ticks: f32, entities: &mut Entities, transforms: &mut Tra
 }
 
 pub fn process_physics2(ticks: f32, entities: &mut Entities, positions: &mut Positions, masses: &Masses) {
-	for x in entities.entities.iter().filter(|x| { x.has_flags(C_MASS | C_TRANSFORM) }) {
+	for x in entities.entities.iter().filter(|x| { x.has_flags(C_MASS | C_POSITION) }) {
 		let mut position = positions.get_mut(*x);
 		let mass = masses.get(*x);
 
