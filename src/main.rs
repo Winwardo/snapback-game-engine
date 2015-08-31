@@ -20,6 +20,7 @@ mod core {
     pub mod transforms {
         pub mod position;
     }
+    pub mod world;
 }
 
 mod render {
@@ -37,6 +38,7 @@ use core::entity::*;
 use core::transforms::position::*;
 use core::component::*;
 use core::mass::*;
+use core::world::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -48,12 +50,10 @@ fn main() {
 struct Game {
     render_system: render::renderer::RenderSystem,
     transform_system: core::transformsystem::TransformSystem,
-    masses: Masses,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
-    entities: Entities,
-    positions: Positions,
+    world: World,
 }
 
 impl Game {
@@ -71,21 +71,19 @@ impl Game {
 
         for x in 0..5000 {
             let ent = square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
-
-            if x < 12500 {
-                masses.register(&mut entities, ent, Mass{ value: 100f32 });
-            }
         }
 
         Game {
             render_system: render_system,
             transform_system: transform_system,
-            masses: masses,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
-            entities: entities,
-            positions: positions,
+            world: World {
+                entities: entities,
+                positions: positions,
+                masses: masses,
+            }
         }
     }
 
@@ -117,17 +115,16 @@ impl Game {
         self.last_tick = now;
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
-//        
+
         let mut en = Entity::blank();
-        en.id = self.entities.entities.len();
-        self.masses.expand(en);
-        self.positions.expand(en);
+        en.id = self.world.entities.entities.len();
+        self.world.masses.expand(en);
+        self.world.positions.expand(en);
 
         core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
-        process_physics(ticks_as_seconds, &mut self.entities, &mut self.positions, &self.masses);
-        process_ylimit(ticks_as_seconds, &mut self.positions);
+        process_physics(ticks_as_seconds, &mut self.world.entities, &mut self.world.positions, &self.world.masses);
 
-        self.render_system.render(self.last_tick, &self.transform_system, &self.positions);
+        self.render_system.render(self.last_tick, &self.transform_system, &self.world.positions);
     }
 
     pub fn render(&mut self) {
