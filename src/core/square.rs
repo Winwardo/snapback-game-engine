@@ -24,7 +24,7 @@ pub fn make_square<'a>(entities: &mut Entities,
 
     let mut transform = Transform::make_default(entity);
     transform.rotation = 45f32 + entity.id as f32;
-    transform.position.x += entity.id as f32;
+    // transform.position.x += entity.id as f32;
     transform_system.register(transform);
 
     positions.register(entities,

@@ -55,7 +55,7 @@ pub fn move_right(ticks: f32, entities: &Entities, transforms: &mut TransformSys
             // let mut q = transform.rotation;
             // unsafe{ q += 1f32; };
 
-            transform.position.x += 1f32;
+            // transform.position.x += 1f32;
         }
     }
 }
@@ -68,8 +68,10 @@ pub fn move_right2(ticks: f32, transforms: &mut TransformSystem) {
     // let mut q = transform.rotation;
     // unsafe{ q += 1f32; };
 
+    // println!("go");
     for transform in &mut transforms.transforms {
-        transform.position.x += 1f32;
+        // transform.position.x += 1f32;
+        // println!("x: {}", transform.position.x);
     }
     // }
 }
