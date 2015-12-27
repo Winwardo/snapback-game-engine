@@ -25,13 +25,13 @@ impl RenderSystem {
         let video_subsystem = sdl_context.video().unwrap();
 
         let window = video_subsystem.window(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
-            .position_centered()
-            .opengl()
-            .build()
-            .unwrap();
+                                    .position_centered()
+                                    .opengl()
+                                    .build()
+                                    .unwrap();
         let mut renderer = window.renderer().build().unwrap();
 
-        renderer.set_draw_color(Color::RGB(70,80,160));
+        renderer.set_draw_color(Color::RGB(70, 80, 160));
 
         RenderSystem {
             sdl_renderer: renderer,
@@ -43,9 +43,9 @@ impl RenderSystem {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
-        //info!("Start drawing all.");
+        // info!("Start drawing all.");
         for drawable in self.drawables.iter() {
-            //info!("Drawing.");
+            // info!("Drawing.");
             drawable.draw(&mut self.sdl_renderer, &transforms, &positions);
         }
 
@@ -72,7 +72,5 @@ impl System<Sprite> for RenderSystem {
         &mut self.drawables[entity.id]
     }
 
-    fn run(&mut self, ticks: u64) {
-
-    }
+    fn run(&mut self, ticks: u64) {}
 }

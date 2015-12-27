@@ -1,9 +1,11 @@
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 extern crate env_logger;
 extern crate sdl2;
 extern crate time;
 extern crate rand;
-#[macro_use] extern crate bitflags;
+#[macro_use]
+extern crate bitflags;
 
 extern crate nalgebra;
 
@@ -13,7 +15,7 @@ mod core {
     pub mod square;
     pub mod transform;
     pub mod transformsystem;
-    #[macro_use] pub mod component;
+    #[macro_use]    pub mod component;
     pub mod system;
     pub mod physicssystem;
     pub mod mass;
@@ -70,7 +72,11 @@ impl Game {
         info!("Creating entities");
 
         for x in 0..5000 {
-            let ent = square::make_square(&mut entities, &mut render_system, &mut transform_system, &mut masses, &mut positions);
+            let ent = square::make_square(&mut entities,
+                                          &mut render_system,
+                                          &mut transform_system,
+                                          &mut masses,
+                                          &mut positions);
         }
 
         Game {
@@ -83,7 +89,7 @@ impl Game {
                 entities: entities,
                 positions: positions,
                 masses: masses,
-            }
+            },
         }
     }
 
@@ -103,7 +109,7 @@ impl Game {
             match event {
                 Event::Quit {..} | Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
                     self.is_running = false
-                },
+                }
                 _ => {}
             }
         }
@@ -122,13 +128,17 @@ impl Game {
         self.world.positions.expand(en);
 
         core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
-        process_physics(ticks_as_seconds, &mut self.world.entities, &mut self.world.positions, &self.world.masses);
+        process_physics(ticks_as_seconds,
+                        &mut self.world.entities,
+                        &mut self.world.positions,
+                        &self.world.masses);
 
-        self.render_system.render(self.last_tick, &self.transform_system, &self.world.positions);
+        self.render_system.render(self.last_tick,
+                                  &self.transform_system,
+                                  &self.world.positions);
     }
 
-    pub fn render(&mut self) {
-    }
+    pub fn render(&mut self) {}
 
     pub fn close(&self) {
         info!("Goodbye!");

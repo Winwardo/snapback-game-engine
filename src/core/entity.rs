@@ -14,67 +14,71 @@ bitflags! {
 
 #[derive(Copy, Clone)]
 pub struct Entity {
-	pub id: usize,
-	flags: ComponentFlag,
+    pub id: usize,
+    flags: ComponentFlag,
 }
 
 impl Entity {
-	pub fn has_flags(self, flags: ComponentFlag) -> bool {
-		self.flags.contains(flags)
-	}
+    pub fn has_flags(self, flags: ComponentFlag) -> bool {
+        self.flags.contains(flags)
+    }
 
-	pub fn blank() -> Entity {
-		Entity { id: 0, flags: C_EMPTY }
-	}
+    pub fn blank() -> Entity {
+        Entity {
+            id: 0,
+            flags: C_EMPTY,
+        }
+    }
 }
 
 pub struct Entities {
-	pub entities: Vec<Entity>,
+    pub entities: Vec<Entity>,
 }
 
 impl Entities {
-	pub fn new() -> Entities {
-		let mut entities = Entities {
-			entities: Vec::with_capacity(1024),
-		};
+    pub fn new() -> Entities {
+        let mut entities = Entities { entities: Vec::with_capacity(1024) };
 
-		//entities.create_entity(C_EMPTY);
-		entities
-	}
+        // entities.create_entity(C_EMPTY);
+        entities
+    }
 
-	pub fn set_flag(&mut self, entity: Entity, flag: ComponentFlag) {
-		self.entities[entity.id].flags.insert(flag);
-	}
+    pub fn set_flag(&mut self, entity: Entity, flag: ComponentFlag) {
+        self.entities[entity.id].flags.insert(flag);
+    }
 
-	pub fn get_new(&mut self) -> Entity {
-		self.create_entity(C_EMPTY)
-	}
+    pub fn get_new(&mut self) -> Entity {
+        self.create_entity(C_EMPTY)
+    }
 
-	pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {
-		let new_id = self.first_inactive_space();
-		let entity = Entity { id: new_id, flags: flags };
+    pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {
+        let new_id = self.first_inactive_space();
+        let entity = Entity {
+            id: new_id,
+            flags: flags,
+        };
 
-		if new_id >= self.entities.len() {
-			self.entities.push(entity);
-		} else {
-			self.entities[new_id] = entity;
-		}
+        if new_id >= self.entities.len() {
+            self.entities.push(entity);
+        } else {
+            self.entities[new_id] = entity;
+        }
 
-		entity
-	}
+        entity
+    }
 
-	fn first_inactive_space(&self) -> usize {
-		let active_len = self.entities.len();
-		for i in 0..active_len {
-			if self.entities[i].flags.is_empty() {
-				return i;
-			}
-		}
+    fn first_inactive_space(&self) -> usize {
+        let active_len = self.entities.len();
+        for i in 0..active_len {
+            if self.entities[i].flags.is_empty() {
+                return i;
+            }
+        }
 
-		return active_len;
-	}
+        return active_len;
+    }
 
-	pub fn with_flags(&mut self, flags: ComponentFlag) -> Vec<&Entity> {
-		self.entities.iter().filter(|x| x.has_flags(flags)).collect::<Vec<&Entity>>()
-	}
+    pub fn with_flags(&mut self, flags: ComponentFlag) -> Vec<&Entity> {
+        self.entities.iter().filter(|x| x.has_flags(flags)).collect::<Vec<&Entity>>()
+    }
 }

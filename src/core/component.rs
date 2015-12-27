@@ -3,35 +3,35 @@
 use core::entity::*;
 
 pub trait Component {
-	fn entity(self) -> Entity;
+    fn entity(self) -> Entity;
 }
 
 pub trait Components<T> {
-	fn entities_mut(&mut self) -> &mut Vec<usize>;
-	fn components_mut(&mut self) -> &mut Vec<T>;
-	fn entities(&self) -> &Vec<usize>;
-	fn components(&self) -> &Vec<T>;	
+    fn entities_mut(&mut self) -> &mut Vec<usize>;
+    fn components_mut(&mut self) -> &mut Vec<T>;
+    fn entities(&self) -> &Vec<usize>;
+    fn components(&self) -> &Vec<T>;
 
-	fn register(&mut self, entities_master: &mut Entities, entity: Entity, component: T,);
+    fn register(&mut self, entities_master: &mut Entities, entity: Entity, component: T);
 
-	fn get_mut(&mut self, entity: Entity) -> &mut T {
-		let comppos = self.entities_mut()[entity.id];
-		return &mut self.components_mut()[comppos];
-	}
+    fn get_mut(&mut self, entity: Entity) -> &mut T {
+        let comppos = self.entities_mut()[entity.id];
+        return &mut self.components_mut()[comppos];
+    }
 
-	fn get(&self, entity: Entity) -> &T {
-		let comppos = self.entities()[entity.id];
-		return & self.components()[comppos];
-		
-		//return &self.components()[entity.id];
-	}
+    fn get(&self, entity: Entity) -> &T {
+        let comppos = self.entities()[entity.id];
+        return &self.components()[comppos];
 
-	fn expand(&mut self, entity: Entity) {
-		let mut entities = self.entities_mut();
-		while entities.len() < entity.id {
-			entities.push(0);
-		}
-	}
+        // return &self.components()[entity.id];
+    }
+
+    fn expand(&mut self, entity: Entity) {
+        let mut entities = self.entities_mut();
+        while entities.len() < entity.id {
+            entities.push(0);
+        }
+    }
 }
 
 macro_rules! components {
