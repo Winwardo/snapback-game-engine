@@ -22,6 +22,9 @@ mod core {
     pub mod transforms {
         pub mod position;
     }
+    pub mod times {
+        pub mod tick;
+    }
     pub mod world;
 }
 
@@ -62,34 +65,43 @@ impl Game {
         info!("Setting up game.");
 
         let sdl_context = sdl2::init().unwrap();
-        let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
-        let mut transform_system = core::transformsystem::TransformSystem::new();
+
         let mut entities = Entities::new();
         let mut masses = Masses::new();
         let mut positions = Positions::new();
 
+        let world = World {
+            entities: entities,
+            positions: positions,
+            masses: masses,
+        };
+
+
+
+        let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
+        let mut transform_system = core::transformsystem::TransformSystem::new();
+
         info!("Creating entities");
 
-        for _ in 0..5000 {
-            square::make_square(&mut entities,
-                                &mut render_system,
-                                &mut transform_system,
-                                &mut masses,
-                                &mut positions);
+        for _ in 0..1 {
+            // square::make_square(&mut entities,
+            //                     &mut render_system,
+            //                     &mut transform_system,
+            //                     &mut masses,
+            //                     &mut positions);
         }
 
-        Game {
+        let out = Game {
             render_system: render_system,
             transform_system: transform_system,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
-            world: World {
-                entities: entities,
-                positions: positions,
-                masses: masses,
-            },
-        }
+            world: world,
+        };
+
+
+        out
     }
 
     pub fn run(&mut self) {
@@ -126,7 +138,9 @@ impl Game {
         self.world.masses.expand(en);
         self.world.positions.expand(en);
 
-        core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
+        // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
+        // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
+
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,
                         &mut self.world.positions,

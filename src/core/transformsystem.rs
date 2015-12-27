@@ -1,8 +1,10 @@
 extern crate nalgebra as na;
 
+use core::component::*;
 use core::entity::*;
 use core::transform::*;
 use core::system::*;
+use core::world::*;
 
 pub struct TransformSystem {
     pub transforms: Vec<Transform>,
@@ -60,7 +62,7 @@ pub fn move_right(ticks: f32, entities: &Entities, transforms: &mut TransformSys
     }
 }
 
-pub fn move_right2(ticks: f32, transforms: &mut TransformSystem) {
+pub fn move_right2(ticks: f32, world: &mut World) {
     // for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
     // 	if entity.has_flags(C_TRANSFORM) {
     // let mut transform2 = transforms.get_mut(*entity);
@@ -69,8 +71,11 @@ pub fn move_right2(ticks: f32, transforms: &mut TransformSystem) {
     // unsafe{ q += 1f32; };
 
     // println!("go");
-    for transform in &mut transforms.transforms {
-        // transform.position.x += 1f32;
+
+
+    for position in world.positions.components_mut() {
+        // position.value.x += 1f32;
+        position.value.x = 0f32;
         // println!("x: {}", transform.position.x);
     }
     // }
