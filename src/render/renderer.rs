@@ -10,6 +10,7 @@ use sdl2::Sdl;
 use core::transforms::position::*;
 use core::transformsystem::*;
 use core::system::*;
+use core::world::*;
 
 static SCREEN_WIDTH: u32 = 1280;
 static SCREEN_HEIGHT: u32 = 720;
@@ -39,14 +40,14 @@ impl RenderSystem {
         }
     }
 
-    pub fn render(&mut self, tick: u64, transforms: &TransformSystem, positions: &Positions) {
+    pub fn render(&mut self, tick: u64, transforms: &TransformSystem, world: &World) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
         // info!("Start drawing all.");
         for drawable in self.drawables.iter() {
             // info!("Drawing.");
-            drawable.draw(&mut self.sdl_renderer, &transforms, &positions);
+            drawable.draw(&mut self.sdl_renderer, &transforms, &world);
         }
 
         self.sdl_renderer.present();

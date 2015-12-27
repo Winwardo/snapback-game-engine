@@ -136,15 +136,14 @@ impl Game {
 
         // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
+        // self.transform_system.move_right2(ticks_as_seconds);
 
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,
                         &mut self.world.positions,
                         &self.world.masses);
 
-        self.render_system.render(self.last_tick,
-                                  &self.transform_system,
-                                  &self.world.positions);
+        self.render_system.render(self.last_tick, &self.transform_system, &self.world);
     }
 
     pub fn render(&mut self) {}

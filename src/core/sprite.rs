@@ -8,6 +8,7 @@ use core::transformsystem::*;
 use core::system::*;
 use core::transforms::position::*;
 use core::component::*;
+use core::world::*;
 
 use sdl2::rect::Rect;
 
@@ -20,10 +21,11 @@ impl Renderable for Sprite {
     fn draw<'a>(&self,
                 renderer: &mut sdl2::render::Renderer<'a>,
                 transform_system: &TransformSystem,
-                positions: &Positions) {
+                world: &World) {
         // find rotation in transforms
         let transform = transform_system.get(self.entity);
-        let position = positions.get(self.entity);
+        // let position = positions.get(self.entity);
+        let position = world.positions.get(self.entity);
         // let position = transform.position;
 
 

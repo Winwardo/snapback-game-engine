@@ -73,9 +73,12 @@ pub fn move_right2(ticks: f32, world: &mut World) {
     // println!("go");
 
 
+    println!("go");
     for position in world.positions.components_mut() {
-        // position.value.x += 1f32;
-        position.value.x = 0f32;
+        println!("yeehaw");
+        position.value.x += 1f32;
+        println!("{:?}", position.value.x);
+        // position.value.x = 0f32;
         // println!("x: {}", transform.position.x);
     }
     // }
