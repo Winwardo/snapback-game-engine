@@ -1,5 +1,4 @@
 use core::entity::*;
-#[macro_use]
 use core::component::*;
 
 pub struct Mass {

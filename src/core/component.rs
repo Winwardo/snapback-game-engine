@@ -1,5 +1,3 @@
-#![feature(macro_rules)]
-
 use core::entity::*;
 
 pub trait Component {

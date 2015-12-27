@@ -1,7 +1,3 @@
-use std::rc::Rc;
-use std::iter::Filter;
-use std::slice::Iter;
-
 bitflags! {
     flags ComponentFlag: u32 {
         const C_EMPTY    		= 0b00000000,
@@ -37,9 +33,8 @@ pub struct Entities {
 
 impl Entities {
     pub fn new() -> Entities {
-        let mut entities = Entities { entities: Vec::with_capacity(1024) };
+        let entities = Entities { entities: Vec::with_capacity(1024) };
 
-        // entities.create_entity(C_EMPTY);
         entities
     }
 

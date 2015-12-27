@@ -5,7 +5,6 @@ use core::transform::*;
 use core::transforms::position::*;
 use core::system::*;
 use core::entity::*;
-use core::physicssystem::*;
 use nalgebra::Vec2;
 use core::component::*;
 use core::mass::*;

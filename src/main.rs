@@ -33,7 +33,6 @@ mod render {
 use core::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
-use std::rc::Rc;
 use core::system::*;
 use core::physicssystem::*;
 use core::entity::*;
@@ -71,12 +70,12 @@ impl Game {
 
         info!("Creating entities");
 
-        for x in 0..5000 {
-            let ent = square::make_square(&mut entities,
-                                          &mut render_system,
-                                          &mut transform_system,
-                                          &mut masses,
-                                          &mut positions);
+        for _ in 0..5000 {
+            square::make_square(&mut entities,
+                                &mut render_system,
+                                &mut transform_system,
+                                &mut masses,
+                                &mut positions);
         }
 
         Game {
