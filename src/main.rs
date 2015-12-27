@@ -70,7 +70,7 @@ impl Game {
         let mut masses = Masses::new();
         let mut positions = Positions::new();
 
-        let world = World {
+        let mut world = World {
             entities: entities,
             positions: positions,
             masses: masses,
@@ -84,11 +84,7 @@ impl Game {
         info!("Creating entities");
 
         for _ in 0..1 {
-            // square::make_square(&mut entities,
-            //                     &mut render_system,
-            //                     &mut transform_system,
-            //                     &mut masses,
-            //                     &mut positions);
+            square::make_square(&mut world, &mut render_system, &mut transform_system);
         }
 
         let out = Game {
