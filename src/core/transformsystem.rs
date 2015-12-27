@@ -5,6 +5,7 @@ use core::entity::*;
 use core::transform::*;
 use core::system::*;
 use core::world::*;
+use core::times::tick::*;
 
 pub struct TransformSystem {
     pub transforms: Vec<Transform>,
@@ -13,6 +14,12 @@ pub struct TransformSystem {
 impl TransformSystem {
     pub fn new() -> TransformSystem {
         TransformSystem { transforms: Vec::new() }
+    }
+
+    pub fn move_all(&mut self, ticks: Ticks, world: &mut World, amount: f32) {
+        for position in world.positions_mut().components_mut() {
+            position.value.x += amount;
+        }
     }
 }
 

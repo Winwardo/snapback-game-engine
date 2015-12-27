@@ -1,1 +1,1 @@
-type Tick = f32;
+pub type Ticks = f32;

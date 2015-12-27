@@ -43,6 +43,7 @@ use core::transforms::position::*;
 use core::component::*;
 use core::mass::*;
 use core::world::*;
+use core::times::tick::*;
 
 fn main() {
     env_logger::init().unwrap();
@@ -89,7 +90,7 @@ impl Game {
 
         let out = Game {
             render_system: render_system,
-            transform_system: transform_system,
+            transform_system: transform_system, 
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
@@ -128,7 +129,8 @@ impl Game {
         self.last_tick = now;
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
-
+        let ticks: Ticks = ticks_as_seconds as Ticks;
+ 
         let mut en = Entity::blank();
         en.id = self.world.entities.entities.len();
         self.world.masses.expand(en);
@@ -137,6 +139,8 @@ impl Game {
         // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds);
+
+        self.transform_system.move_all(ticks, &mut self.world, 1f32);
 
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,
