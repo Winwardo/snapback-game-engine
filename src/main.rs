@@ -10,11 +10,7 @@ extern crate bitflags;
 extern crate nalgebra;
 
 mod core;
-
-mod render {
-    pub mod renderer;
-    pub mod renderable;
-}
+mod render;
 
 use core::*;
 use sdl2::Sdl;

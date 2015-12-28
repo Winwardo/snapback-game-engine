@@ -2,7 +2,8 @@
 pub mod entity;
 pub mod sprite;
 pub mod square;
-    #[macro_use]pub mod component;
+#[macro_use]
+pub mod component;
 pub mod system;
 pub mod physics;
 pub mod systems;
