@@ -2,7 +2,7 @@ extern crate nalgebra as na;
 
 use core::component::*;
 use core::entity::*;
-use core::transform::*;
+use core::transforms::transform::*;
 use core::system::*;
 use core::world::*;
 use core::times::tick::*;
@@ -17,11 +17,16 @@ impl TransformSystem {
     }
 
     pub fn move_all(&mut self, ticks: Ticks, world: &mut World, amount: f32) {
-        for position in world.positions().components_mut() {
-            position.value.x += amount;
-        }
-        for rotation in world.rotations().components_mut() {
-            rotation.value += 1f32;
+        // for position in world.positions().components_mut() {
+        //     position.value.x += amount;
+        // }
+        // for rotation in world.rotations().components_mut() {
+        //     rotation.value += 1f32;
+        // }
+        // println!("hey");
+        for transform in world.transforms.components_mut() {
+            // transform.position.transforms
+            transform.rotation += 1f32;
         }
     }
 }

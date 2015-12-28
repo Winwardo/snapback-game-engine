@@ -1,7 +1,7 @@
 use render::renderer::*;
 use core::sprite::*;
 use core::systems::transformsystem::*;
-use core::transform::*;
+use core::transforms::transform::*;
 use core::transforms::position::*;
 use core::transforms::rotation::*;
 use core::system::*;
@@ -30,6 +30,8 @@ pub fn make_square<'a>(world: &mut World,
 
     let m = &mut world.entities;
 
+    world.transforms.register(m, entity, Transform::make_default(entity));
+
     world.positions.register(m,
                              entity,
                              Position {
@@ -39,11 +41,11 @@ pub fn make_square<'a>(world: &mut World,
                                  },
                              });
 
-    world.rotations.register(m,
-                             entity,
-                             Rotation {
-                                 value: 0f32,
-                             });
+    // world.rotations.register(m,
+    //                          entity,
+    //                          Rotation {
+    //                              value: 0f32,
+    //                          });
 
     entity
 }

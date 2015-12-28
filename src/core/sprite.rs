@@ -23,15 +23,9 @@ impl Renderable for Sprite {
                 transform_system: &TransformSystem,
                 world: &World) {
         // find rotation in transforms
-        let transform = transform_system.get(self.entity);
-        // let position = positions.get(self.entity);
+        let transform = world.transforms.get(self.entity);
         let position = world.positions.get(self.entity);
-        let rotation = world.rotations.get(self.entity).value;
-        // let rotation = 7;
-        // let position = transform.position;
-
-
-        // println!("x: {}", position.value.x);
+        let rotation = transform.rotation;
 
         renderer.copy_ex(&self.texture,
                          None,
@@ -39,7 +33,7 @@ impl Renderable for Sprite {
                                                position.value.y as i32,
                                                32,
                                                32)),
-                         rotation as f64, 
+                         rotation as f64,
                          None,
                          (false, false));
     }

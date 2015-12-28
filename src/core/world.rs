@@ -1,7 +1,8 @@
 use core::entity::*;
 use core::transforms::position::*;
 use core::mass::*;
-use core::transforms::rotation::*; 
+use core::transforms::rotation::*;
+use core::transforms::transform::*;
 
 
 macro_rules! struct_world {
@@ -38,4 +39,4 @@ macro_rules! make_world {
     }    	
 }
 
-make_world!(entities: Entities, positions: Positions, masses: Masses, rotations: Rotations);
+make_world!(entities: Entities, positions: Positions, masses: Masses, rotations: Rotations, transforms: Transforms);

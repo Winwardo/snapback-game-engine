@@ -1,17 +1,11 @@
-use core::component::*;
 use core::entity::*;
+use core::component::*;
 use nalgebra::Vec2;
 
 pub struct Transform {
     pub entity: Entity,
     pub scaling: Vec2<f32>,
     pub rotation: f32,
-}
-
-impl Component for Transform {
-    fn entity(self) -> Entity {
-        self.entity
-    }
 }
 
 impl Transform {
@@ -23,3 +17,5 @@ impl Transform {
         }
     }
 }
+
+components!(Transform, Transforms, C_TRANSFORM);

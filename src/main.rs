@@ -13,17 +13,17 @@ mod core {
     pub mod entity;
     pub mod sprite;
     pub mod square;
-    pub mod transform;
     #[macro_use]    pub mod component;
     pub mod system;
     pub mod mass;
     pub mod systems {
-    pub mod transformsystem;
-    pub mod physicssystem;
+        pub mod transformsystem;
+        pub mod physicssystem;
     }
     pub mod transforms {
         pub mod position;
         pub mod rotation;
+        pub mod transform;
     }
     pub mod times {
         pub mod tick;
@@ -44,6 +44,7 @@ use core::systems::physicssystem::*;
 use core::entity::*;
 use core::transforms::position::*;
 use core::transforms::rotation::*;
+use core::transforms::transform::*;
 use core::systems::transformsystem::*;
 use core::component::*;
 use core::mass::*;
@@ -81,6 +82,7 @@ impl Game {
             positions: positions,
             masses: masses,
             rotations: Rotations::new(),
+            transforms: Transforms::new(),
         };
 
 
@@ -149,8 +151,8 @@ impl Game {
 
         // self.transform_system.move_all(ticks, &mut self.world, 1f32);
 
-self.transform_system.tick(&mut self.world, ticks);
-// self.rotate_on_x_system.tick(&mut self.world, ticks);
+        self.transform_system.tick(&mut self.world, ticks);
+        // self.rotate_on_x_system.tick(&mut self.world, ticks);
 
 
         process_physics(ticks_as_seconds,
@@ -160,7 +162,8 @@ self.transform_system.tick(&mut self.world, ticks);
     }
 
     pub fn render(&mut self) {
-        self.render_system.render(self.last_tick, &self.transform_system, &self.world);}
+        self.render_system.render(self.last_tick, &self.transform_system, &self.world);
+    }
 
     pub fn close(&self) {
         info!("Goodbye!");
