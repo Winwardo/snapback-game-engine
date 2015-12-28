@@ -39,4 +39,4 @@ macro_rules! make_world {
     }    	
 }
 
-make_world!(entities: Entities, positions: Positions, masses: Masses, rotations: Rotations, transforms: Transforms);
+make_world!(entities: Entities, positions: Positions, masses: Masses, transforms: Transforms);

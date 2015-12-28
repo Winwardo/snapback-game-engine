@@ -81,7 +81,6 @@ impl Game {
             entities: entities,
             positions: positions,
             masses: masses,
-            rotations: Rotations::new(),
             transforms: Transforms::new(),
         };
 
@@ -143,7 +142,8 @@ impl Game {
         en.id = self.world.entities.entities.len();
         self.world.masses.expand(en);
         self.world.positions.expand(en);
-        self.world.rotations.expand(en);
+        self.world.transforms.expand(en);
+        // self.world.rotations.expand(en);
 
         // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
