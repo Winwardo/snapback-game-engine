@@ -26,6 +26,8 @@ impl Renderable for Sprite {
         let transform = transform_system.get(self.entity);
         // let position = positions.get(self.entity);
         let position = world.positions.get(self.entity);
+        let rotation = world.rotations.get(self.entity).value;
+        // let rotation = 7;
         // let position = transform.position;
 
 
@@ -37,7 +39,7 @@ impl Renderable for Sprite {
                                                position.value.y as i32,
                                                32,
                                                32)),
-                         transform.rotation as f64,
+                         rotation as f64, 
                          None,
                          (false, false));
     }

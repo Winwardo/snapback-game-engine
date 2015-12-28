@@ -5,6 +5,7 @@ bitflags! {
         const C_SPRITE       	= 0b00000010,
         const C_MASS	     	= 0b00000100,
         const C_TRANSFORM    	= 0b00001000,
+        const C_ROTATION        = 0b00010000,
     }
 }
 

@@ -20,6 +20,9 @@ impl TransformSystem {
         for position in world.positions().components_mut() {
             position.value.x += amount;
         }
+        for rotation in world.rotations().components_mut() {
+            rotation.value += 1f32;
+        }
     }
 }
 

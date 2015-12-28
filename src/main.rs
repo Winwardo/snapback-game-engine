@@ -23,6 +23,7 @@ mod core {
     }
     pub mod transforms {
         pub mod position;
+        pub mod rotation;
     }
     pub mod times {
         pub mod tick;
@@ -42,6 +43,7 @@ use core::system::*;
 use core::systems::physicssystem::*;
 use core::entity::*;
 use core::transforms::position::*;
+use core::transforms::rotation::*;
 use core::systems::transformsystem::*;
 use core::component::*;
 use core::mass::*;
@@ -78,6 +80,7 @@ impl Game {
             entities: entities,
             positions: positions,
             masses: masses,
+            rotations: Rotations::new(),
         };
 
 
@@ -138,6 +141,7 @@ impl Game {
         en.id = self.world.entities.entities.len();
         self.world.masses.expand(en);
         self.world.positions.expand(en);
+        self.world.rotations.expand(en);
 
         // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
@@ -145,7 +149,7 @@ impl Game {
 
         // self.transform_system.move_all(ticks, &mut self.world, 1f32);
 
-// self.transform_system.tick(&mut self.world, ticks);
+self.transform_system.tick(&mut self.world, ticks);
 // self.rotate_on_x_system.tick(&mut self.world, ticks);
 
 

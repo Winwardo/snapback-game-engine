@@ -1,6 +1,7 @@
 use core::entity::*;
 use core::transforms::position::*;
 use core::mass::*;
+use core::transforms::rotation::*; 
 
 
 macro_rules! struct_world {
@@ -18,7 +19,7 @@ macro_rules! impl_world {
     			&mut self.$element
     		}
         }
-    }
+    } 
 }
 
 macro_rules! impl_world_long {
@@ -37,4 +38,4 @@ macro_rules! make_world {
     }    	
 }
 
-make_world!(entities: Entities, positions: Positions, masses: Masses);
+make_world!(entities: Entities, positions: Positions, masses: Masses, rotations: Rotations);

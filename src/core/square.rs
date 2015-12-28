@@ -3,6 +3,7 @@ use core::sprite::*;
 use core::systems::transformsystem::*;
 use core::transform::*;
 use core::transforms::position::*;
+use core::transforms::rotation::*;
 use core::system::*;
 use core::entity::*;
 use nalgebra::Vec2;
@@ -25,6 +26,8 @@ pub fn make_square<'a>(world: &mut World,
     transform.rotation = 45f32 + entity.id as f32;
     transform_system.register(transform);
 
+
+
     let m = &mut world.entities;
 
     world.positions.register(m,
@@ -34,6 +37,12 @@ pub fn make_square<'a>(world: &mut World,
                                      x: entity.id as f32,
                                      y: 0f32,
                                  },
+                             });
+
+    world.rotations.register(m,
+                             entity,
+                             Rotation {
+                                 value: 0f32,
                              });
 
     entity
