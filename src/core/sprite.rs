@@ -4,7 +4,7 @@ extern crate sdl2;
 use core::entity::*;
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
-use core::transformsystem::*;
+use core::systems::transformsystem::*;
 use core::system::*;
 use core::transforms::position::*;
 use core::component::*;

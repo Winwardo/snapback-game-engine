@@ -14,11 +14,13 @@ mod core {
     pub mod sprite;
     pub mod square;
     pub mod transform;
-    pub mod transformsystem;
     #[macro_use]    pub mod component;
     pub mod system;
-    pub mod physicssystem;
     pub mod mass;
+    pub mod systems {
+    pub mod transformsystem;
+    pub mod physicssystem;
+    }
     pub mod transforms {
         pub mod position;
     }
@@ -37,9 +39,10 @@ use core::*;
 use sdl2::Sdl;
 use sdl2::keyboard::Keycode;
 use core::system::*;
-use core::physicssystem::*;
+use core::systems::physicssystem::*;
 use core::entity::*;
 use core::transforms::position::*;
+use core::systems::transformsystem::*;
 use core::component::*;
 use core::mass::*;
 use core::world::*;
@@ -54,7 +57,7 @@ fn main() {
 
 struct Game {
     render_system: render::renderer::RenderSystem,
-    transform_system: core::transformsystem::TransformSystem,
+    transform_system: TransformSystem,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
@@ -80,7 +83,7 @@ impl Game {
 
 
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
-        let mut transform_system = core::transformsystem::TransformSystem::new();
+        let mut transform_system = TransformSystem::new();
 
         info!("Creating entities");
 
@@ -142,7 +145,9 @@ impl Game {
 
         // self.transform_system.move_all(ticks, &mut self.world, 1f32);
 
-self.transform_system.tick(&mut self.world, ticks);
+// self.transform_system.tick(&mut self.world, ticks);
+// self.rotate_on_x_system.tick(&mut self.world, ticks);
+
 
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,

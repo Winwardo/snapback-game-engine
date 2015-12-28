@@ -38,9 +38,6 @@ impl System<Transform> for TransformSystem {
 
     fn tick(&mut self, world: &mut World, ticks: Ticks) {
         self.move_all(ticks, world, 1f32);
-        // for t in self.transforms.iter_mut() {
-            // t.rotation += 90f32 * ticks as f32 / 1000000000f32;
-        // }
     }
 }
 
