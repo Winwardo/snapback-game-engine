@@ -9,30 +9,7 @@ extern crate bitflags;
 
 extern crate nalgebra;
 
-mod core {
-    pub mod entity;
-    pub mod sprite;
-    pub mod square;
-    #[macro_use]    pub mod component;
-    pub mod system;
-    pub mod physics {
-        pub mod mass;
-        pub mod movement;
-    }
-    pub mod systems {
-        pub mod transformsystem;
-        pub mod physicssystem;
-    }
-    pub mod transforms {
-        pub mod position;
-        pub mod rotation;
-        pub mod transform;
-    }
-    pub mod times {
-        pub mod tick;
-    }
-    pub mod world;
-}
+mod core;
 
 mod render {
     pub mod renderer;
