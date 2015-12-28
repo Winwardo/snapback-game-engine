@@ -73,16 +73,11 @@ impl Game {
 
         let sdl_context = sdl2::init().unwrap();
 
-        let entities = Entities::new();
-        let masses = Masses::new();
-
         let mut world = World {
-            entities: entities,
-            masses: masses,
+            entities: Entities::new(),
+            masses: Masses::new(),
             transforms: Transforms::new(),
         };
-
-
 
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
         let mut transform_system = TransformSystem::new();
@@ -129,18 +124,18 @@ impl Game {
     }
 
     pub fn tick(&mut self) {
+        let ticks = self.do_tick();
+
+        process_physics(ticks, &mut self.world);
+    }
+
+    fn do_tick(&mut self) -> Ticks {
         let now = time::precise_time_ns();
         let ticks = now - self.last_tick;
         self.last_tick = now;
 
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
-        let ticks: Ticks = ticks_as_seconds as Ticks;
-
-        // self.transform_system.tick(&mut self.world, ticks);
-        // self.rotate_on_x_system.tick(&mut self.world, ticks);
-
-
-        process_physics(ticks_as_seconds, &mut self.world);
+        ticks_as_seconds as Ticks
     }
 
     pub fn render(&mut self) {
