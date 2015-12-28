@@ -1,6 +1,6 @@
 use core::entity::*;
 use core::transforms::position::*;
-use core::mass::*;
+use core::physics::mass::*;
 use core::transforms::rotation::*;
 use core::transforms::transform::*;
 

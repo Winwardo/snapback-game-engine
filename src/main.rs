@@ -15,7 +15,9 @@ mod core {
     pub mod square;
     #[macro_use]    pub mod component;
     pub mod system;
-    pub mod mass;
+    pub mod physics {
+        pub mod mass;
+    }
     pub mod systems {
         pub mod transformsystem;
         pub mod physicssystem;
@@ -47,7 +49,7 @@ use core::transforms::rotation::*;
 use core::transforms::transform::*;
 use core::systems::transformsystem::*;
 use core::component::*;
-use core::mass::*;
+use core::physics::mass::*;
 use core::world::*;
 use core::times::tick::*;
 

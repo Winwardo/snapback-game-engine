@@ -8,7 +8,7 @@ use core::system::*;
 use core::entity::*;
 use nalgebra::Vec2;
 use core::component::*;
-use core::mass::*;
+use core::physics::mass::*;
 use core::world::*;
 
 extern crate time;

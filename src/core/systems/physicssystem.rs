@@ -2,7 +2,7 @@ use core::entity::*;
 use core::transforms::position::*;
 use core::system::*;
 use core::component::*;
-use core::mass::*;
+use core::physics::mass::*;
 use core::world::*;
 use core::times::tick::*;
 
