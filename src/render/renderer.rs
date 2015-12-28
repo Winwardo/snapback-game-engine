@@ -7,8 +7,6 @@ use core::sprite::*;
 use sdl2::pixels::Color;
 use sdl2::Sdl;
 
-use core::transforms::position::*;
-use core::systems::transformsystem::*;
 use core::system::*;
 use core::times::tick::*;
 use core::world::*;
@@ -41,14 +39,12 @@ impl RenderSystem {
         }
     }
 
-    pub fn render(&mut self, tick: u64, transforms: &TransformSystem, world: &World) {
+    pub fn render(&mut self, tick: u64,world: &World) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
-        // info!("Start drawing all.");
         for drawable in self.drawables.iter() {
-            // info!("Drawing.");
-            drawable.draw(&mut self.sdl_renderer, &transforms, &world);
+            drawable.draw(&mut self.sdl_renderer, &world);
         }
 
         self.sdl_renderer.present();
@@ -74,5 +70,5 @@ impl System<Sprite> for RenderSystem {
         &mut self.drawables[entity.id]
     }
 
-    fn tick(&mut self, world: &mut World, ticks: Ticks) {}
+    fn tick(&mut self, _: &mut World, _: Ticks) {}
 }

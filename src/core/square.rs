@@ -1,12 +1,8 @@
 use render::renderer::*;
 use core::sprite::*;
-use core::systems::transformsystem::*;
 use core::transforms::transform::*;
-use core::transforms::position::*;
-use core::transforms::rotation::*;
 use core::system::*;
 use core::entity::*;
-use nalgebra::Vec2;
 use core::component::*;
 use core::physics::mass::*;
 use core::physics::movement::*;
@@ -15,8 +11,7 @@ use core::world::*;
 extern crate time;
 
 pub fn make_square<'a>(world: &mut World,
-                       render_system: &mut RenderSystem,
-                       transform_system: &mut TransformSystem)
+                       render_system: &mut RenderSystem)
                        -> Entity {
     let entity = world.entities.create_entity(C_SPRITE | C_TRANSFORM);
 

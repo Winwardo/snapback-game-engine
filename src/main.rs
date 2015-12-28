@@ -18,11 +18,7 @@ use sdl2::keyboard::Keycode;
 use core::system::*;
 use core::systems::physicssystem::*;
 use core::entity::*;
-use core::transforms::position::*;
-use core::transforms::rotation::*;
 use core::transforms::transform::*;
-use core::systems::transformsystem::*;
-use core::component::*;
 use core::physics::mass::*;
 use core::physics::movement::*;
 use core::world::*;
@@ -37,7 +33,6 @@ fn main() {
 
 struct Game {
     render_system: render::renderer::RenderSystem,
-    transform_system: TransformSystem,
     last_tick: u64,
     is_running: bool,
     sdl_context: Sdl,
@@ -58,17 +53,15 @@ impl Game {
         };
 
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
-        let mut transform_system = TransformSystem::new();
 
         info!("Creating entities");
 
         for _ in 0..1 {
-            square::make_square(&mut world, &mut render_system, &mut transform_system);
+            square::make_square(&mut world, &mut render_system);
         }
 
         let out = Game {
             render_system: render_system,
-            transform_system: transform_system,
             last_tick: time::precise_time_ns(),
             is_running: true,
             sdl_context: sdl_context,
@@ -117,7 +110,7 @@ impl Game {
     }
 
     pub fn render(&mut self) {
-        self.render_system.render(self.last_tick, &self.transform_system, &self.world);
+        self.render_system.render(self.last_tick, &self.world);
     }
 
     pub fn close(&self) {
