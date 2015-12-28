@@ -17,6 +17,7 @@ mod core {
     pub mod system;
     pub mod physics {
         pub mod mass;
+        pub mod movement;
     }
     pub mod systems {
         pub mod transformsystem;

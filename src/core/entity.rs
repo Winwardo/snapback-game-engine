@@ -4,6 +4,7 @@ bitflags! {
         const C_SPRITE       	= 0b00000001,
         const C_TRANSFORM    	= 0b00000010,
         const C_MASS            = 0b00000100,
+        const C_MOVEMENT        = 0b00001000,
     }
 }
 
