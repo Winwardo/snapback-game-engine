@@ -2,29 +2,39 @@ use core::entity::*;
 use core::transforms::position::*;
 use core::mass::*;
 
-pub struct World {
-    pub entities: Entities,
-    pub positions: Positions,
-    pub masses: Masses,
+
+macro_rules! struct_world {
+    ($($element: ident: $ty: ty),*) => {
+        pub struct World {
+        	$(pub $element: $ty),*
+        }
+    }
 }
 
-impl World {
-    pub fn entities(&self) -> &Entities {
-        &self.entities
-    }
-    pub fn entities_mut(&mut self) -> &mut Entities {
-        &mut self.entities
-    }
-    pub fn positions(&self) -> &Positions {
-        &self.positions
-    }
-    pub fn positions_mut(&mut self) -> &mut Positions {
-        &mut self.positions
-    }
-    pub fn masses(&self) -> &Masses {
-        &self.masses
-    }
-    pub fn masses_mut(&mut self) -> &mut Masses {
-        &mut self.masses
+macro_rules! impl_world {
+    ($element: ident: $ty: ty) => {
+        impl World {        
+    		pub fn $element(&mut self) -> &mut $ty {
+    			&mut self.$element
+    		}
+        }
     }
 }
+
+macro_rules! impl_world_long {
+    ($($element: ident: $ty: ty),*) => {
+        $(
+        	impl_world!($element: $ty);
+        )*
+    }
+}
+
+macro_rules! make_world {
+	// https://stackoverflow.com/questions/32289605/how-do-i-write-a-wrapper-for-a-macro-without-repeating-the-rules
+    ($($tts:tt)*) => {
+        struct_world!($($tts)*);
+    	impl_world_long!($($tts)*);
+    }    	
+}
+
+make_world!(entities: Entities, positions: Positions, masses: Masses);

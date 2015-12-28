@@ -17,7 +17,7 @@ impl TransformSystem {
     }
 
     pub fn move_all(&mut self, ticks: Ticks, world: &mut World, amount: f32) {
-        for position in world.positions_mut().components_mut() {
+        for position in world.positions().components_mut() {
             position.value.x += amount;
         }
     }
