@@ -41,7 +41,13 @@ macro_rules! make_world {
 }
 
 make_world!(
-	entities: Entities,
+	entities: Entities, 
 	masses: Masses,
 	transforms: Transforms
 );
+
+impl World {
+    pub fn masses_non(&self) -> &Masses {
+        &self.masses
+    }
+}

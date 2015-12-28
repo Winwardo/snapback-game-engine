@@ -4,7 +4,7 @@ use core::transforms::rotation::*;
 use core::transforms::position::*;
 use nalgebra::Vec2;
 
-pub struct Transform { 
+pub struct Transform {
     pub entity: Entity,
     pub scaling: Vec2<f32>,
     pub rotation: Rotation,

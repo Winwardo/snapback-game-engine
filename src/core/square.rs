@@ -31,12 +31,6 @@ pub fn make_square<'a>(world: &mut World,
     let m = &mut world.entities;
 
     world.transforms.register(m, entity, Transform::make_default(entity));
-
-    // world.rotations.register(m,
-    //                          entity,
-    //                          Rotation {
-    //                              value: 0f32,
-    //                          });
-
+    world.masses.register(m, entity, Mass { value: 10f32 });
     entity
 }

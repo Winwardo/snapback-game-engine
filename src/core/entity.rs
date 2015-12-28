@@ -1,11 +1,9 @@
 bitflags! {
     flags ComponentFlag: u32 {
         const C_EMPTY    		= 0b00000000,
-        const C_POSITION   		= 0b00000001,
-        const C_SPRITE       	= 0b00000010,
-        const C_MASS	     	= 0b00000100,
-        const C_TRANSFORM    	= 0b00001000,
-        const C_ROTATION        = 0b00010000,
+        const C_SPRITE       	= 0b00000001,
+        const C_TRANSFORM    	= 0b00000010,
+        const C_MASS            = 0b00000100,
     }
 }
 
@@ -74,7 +72,7 @@ impl Entities {
         return active_len;
     }
 
-    pub fn with_flags(&mut self, flags: ComponentFlag) -> Vec<&Entity> {
-        self.entities.iter().filter(|x| x.has_flags(flags)).collect::<Vec<&Entity>>()
+    pub fn with_flags(&mut self, flags: ComponentFlag) -> Vec<Entity> {
+        self.entities.iter().filter(|x| x.has_flags(flags)).map(|x| *x).collect::<Vec<Entity>>()
     }
 }

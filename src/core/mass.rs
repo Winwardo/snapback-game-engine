@@ -1,6 +1,7 @@
 use core::entity::*;
 use core::component::*;
 
+#[derive(Copy, Clone)]
 pub struct Mass {
     pub value: f32,
 }

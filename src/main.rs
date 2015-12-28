@@ -136,26 +136,11 @@ impl Game {
         let ticks_as_seconds = (ticks as f32 / 1000000000f32) as f32;
         let ticks: Ticks = ticks_as_seconds as Ticks;
 
-        let mut en = Entity::blank();
-        en.id = self.world.entities.entities.len();
-        self.world.masses.expand(en);
-        self.world.transforms.expand(en);
-        // self.world.rotations.expand(en);
-
-        // core::transformsystem::move_right2(ticks_as_seconds, &mut self.transform_system);
-        // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
-        // self.transform_system.move_right2(ticks_as_seconds);
-
-        // self.transform_system.move_all(ticks, &mut self.world, 1f32);
-
-        self.transform_system.tick(&mut self.world, ticks);
+        // self.transform_system.tick(&mut self.world, ticks);
         // self.rotate_on_x_system.tick(&mut self.world, ticks);
 
 
-        process_physics(ticks_as_seconds,
-                        &mut self.world.entities,
-                        // &mut self.world.positions,
-                        &self.world.masses);
+        process_physics(ticks_as_seconds, &mut self.world);
     }
 
     pub fn render(&mut self) {

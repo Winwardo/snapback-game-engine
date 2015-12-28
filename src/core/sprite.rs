@@ -30,10 +30,7 @@ impl Renderable for Sprite {
 
         renderer.copy_ex(&self.texture,
                          None,
-                         Some(Rect::new_unwrap(position.x as i32,
-                                               position.y as i32,
-                                               32,
-                                               32)),
+                         Some(Rect::new_unwrap(position.x as i32, position.y as i32, 32, 32)),
                          rotation as f64,
                          None,
                          (false, false));
