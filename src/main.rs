@@ -52,8 +52,9 @@ impl Game {
             movements: Movements::new(),
         };
 
-        // Clear compiler warning
+        // Clear compiler unused warning
         world.entities();
+        world.masses();
 
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
 

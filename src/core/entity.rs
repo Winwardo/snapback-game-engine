@@ -42,10 +42,6 @@ impl Entities {
         self.entities[entity.id].flags.insert(flag);
     }
 
-    pub fn get_new(&mut self) -> Entity {
-        self.create_entity(C_EMPTY)
-    }
-
     pub fn create_entity(&mut self, flags: ComponentFlag) -> Entity {
         let new_id = self.first_inactive_space();
         let entity = Entity {
