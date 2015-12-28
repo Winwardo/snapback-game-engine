@@ -17,7 +17,11 @@ pub fn make_square<'a>(world: &mut World, render_system: &mut RenderSystem) -> E
     render_system.register(sprite);
 
     let m = &mut world.entities;
-    world.transforms.register(m, entity, Transform::make_default(entity));
+    {
+        let mut transform = Transform::make_default(entity);
+        transform.position.x = entity.id as f32 * 32f32;
+        world.transforms.register(m, entity, transform);
+    }
     world.masses.register(m, entity, Mass { value: 10f32 });
     world.movements.register(m, entity, Movement::zero());
 

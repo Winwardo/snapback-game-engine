@@ -60,7 +60,7 @@ impl Game {
 
         info!("Creating entities");
 
-        for _ in 0..1 {
+        for _ in 0..100 {
             square::make_square(&mut world, &mut render_system);
         }
 
@@ -71,7 +71,6 @@ impl Game {
             sdl_context: sdl_context,
             world: world,
         };
-
 
         out
     }
