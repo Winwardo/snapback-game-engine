@@ -9,6 +9,7 @@ use core::entity::*;
 use nalgebra::Vec2;
 use core::component::*;
 use core::physics::mass::*;
+use core::physics::movement::*;
 use core::world::*;
 
 extern crate time;
@@ -25,5 +26,7 @@ pub fn make_square<'a>(world: &mut World,
     let m = &mut world.entities;
     world.transforms.register(m, entity, Transform::make_default(entity));
     world.masses.register(m, entity, Mass { value: 10f32 });
+    world.movements.register(m, entity, Movement::zero());
+
     entity
 }

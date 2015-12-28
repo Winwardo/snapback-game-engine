@@ -1,9 +1,9 @@
 use core::entity::*;
 use core::transforms::position::*;
 use core::physics::mass::*;
+use core::physics::movement::*;
 use core::transforms::rotation::*;
 use core::transforms::transform::*;
-
 
 macro_rules! struct_world {
     ($($element: ident: $ty: ty),*) => {
@@ -43,11 +43,6 @@ macro_rules! make_world {
 make_world!(
 	entities: Entities, 
 	masses: Masses,
-	transforms: Transforms
+	transforms: Transforms,
+	movements: Movements
 );
-
-impl World {
-    pub fn masses_non(&self) -> &Masses {
-        &self.masses
-    }
-}

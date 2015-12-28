@@ -51,6 +51,7 @@ use core::transforms::transform::*;
 use core::systems::transformsystem::*;
 use core::component::*;
 use core::physics::mass::*;
+use core::physics::movement::*;
 use core::world::*;
 use core::times::tick::*;
 
@@ -80,6 +81,7 @@ impl Game {
             entities: Entities::new(),
             masses: Masses::new(),
             transforms: Transforms::new(),
+            movements: Movements::new(),
         };
 
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);

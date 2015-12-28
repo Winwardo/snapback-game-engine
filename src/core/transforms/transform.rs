@@ -4,6 +4,7 @@ use core::transforms::rotation::*;
 use core::transforms::position::*;
 use nalgebra::Vec2;
 
+#[derive(Copy, Clone)]
 pub struct Transform {
     pub entity: Entity,
     pub scaling: Vec2<f32>,
