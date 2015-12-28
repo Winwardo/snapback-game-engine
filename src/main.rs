@@ -52,6 +52,9 @@ impl Game {
             movements: Movements::new(),
         };
 
+        // Clear compiler warning
+        world.entities();
+
         let mut render_system = render::renderer::RenderSystem::new(&sdl_context);
 
         info!("Creating entities");

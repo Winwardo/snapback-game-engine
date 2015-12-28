@@ -10,9 +10,7 @@ use core::world::*;
 
 extern crate time;
 
-pub fn make_square<'a>(world: &mut World,
-                       render_system: &mut RenderSystem)
-                       -> Entity {
+pub fn make_square<'a>(world: &mut World, render_system: &mut RenderSystem) -> Entity {
     let entity = world.entities.create_entity(C_SPRITE | C_TRANSFORM);
 
     let sprite = Sprite::make(entity, &mut render_system.sdl_renderer);

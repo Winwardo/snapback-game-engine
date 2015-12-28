@@ -4,7 +4,7 @@ extern crate sdl2;
 use core::entity::*;
 use super::super::render::renderable::*;
 use sdl2::pixels::PixelFormatEnum;
-use core::system::*; 
+use core::system::*;
 use core::component::*;
 use core::world::*;
 
@@ -16,9 +16,7 @@ pub struct Sprite {
 }
 
 impl Renderable for Sprite {
-    fn draw<'a>(&self,
-                renderer: &mut sdl2::render::Renderer<'a>,
-                world: &World) {
+    fn draw<'a>(&self, renderer: &mut sdl2::render::Renderer<'a>, world: &World) {
         // find rotation in transforms
         let transform = world.transforms.get(self.entity);
         // let position = world.positions.get(self.entity);

@@ -39,7 +39,7 @@ impl RenderSystem {
         }
     }
 
-    pub fn render(&mut self, tick: u64,world: &World) {
+    pub fn render(&mut self, tick: u64, world: &World) {
         self.update_title(tick);
         self.sdl_renderer.clear();
 
