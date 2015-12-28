@@ -10,6 +10,7 @@ use sdl2::Sdl;
 use core::transforms::position::*;
 use core::transformsystem::*;
 use core::system::*;
+use core::times::tick::*;
 use core::world::*;
 
 static SCREEN_WIDTH: u32 = 1280;
@@ -73,5 +74,6 @@ impl System<Sprite> for RenderSystem {
         &mut self.drawables[entity.id]
     }
 
-    fn run(&mut self, ticks: u64) {}
+    fn tick(&mut self, world: &mut World, ticks: Ticks) {}
 }
+ 

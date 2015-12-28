@@ -67,9 +67,9 @@ impl Game {
 
         let sdl_context = sdl2::init().unwrap();
 
-        let mut entities = Entities::new();
-        let mut masses = Masses::new();
-        let mut positions = Positions::new();
+        let entities = Entities::new();
+        let masses = Masses::new();
+        let positions = Positions::new();
 
         let mut world = World {
             entities: entities,
@@ -140,17 +140,18 @@ impl Game {
         // self.transform_system.move_right2(ticks_as_seconds, &mut self.transform_system);
         // self.transform_system.move_right2(ticks_as_seconds);
 
-        self.transform_system.move_all(ticks, &mut self.world, 1f32);
+        // self.transform_system.move_all(ticks, &mut self.world, 1f32);
+
+self.transform_system.tick(&mut self.world, ticks);
 
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,
                         &mut self.world.positions,
                         &self.world.masses);
-
-        self.render_system.render(self.last_tick, &self.transform_system, &self.world);
     }
 
-    pub fn render(&mut self) {}
+    pub fn render(&mut self) {
+        self.render_system.render(self.last_tick, &self.transform_system, &self.world);}
 
     pub fn close(&self) {
         info!("Goodbye!");

@@ -29,7 +29,7 @@ impl Renderable for Sprite {
         // let position = transform.position;
 
 
-        println!("x: {}", position.value.x);
+        // println!("x: {}", position.value.x);
 
         renderer.copy_ex(&self.texture,
                          None,
