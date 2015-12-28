@@ -75,11 +75,9 @@ impl Game {
 
         let entities = Entities::new();
         let masses = Masses::new();
-        let positions = Positions::new();
 
         let mut world = World {
             entities: entities,
-            positions: positions,
             masses: masses,
             transforms: Transforms::new(),
         };
@@ -141,7 +139,6 @@ impl Game {
         let mut en = Entity::blank();
         en.id = self.world.entities.entities.len();
         self.world.masses.expand(en);
-        self.world.positions.expand(en);
         self.world.transforms.expand(en);
         // self.world.rotations.expand(en);
 
@@ -157,7 +154,7 @@ impl Game {
 
         process_physics(ticks_as_seconds,
                         &mut self.world.entities,
-                        &mut self.world.positions,
+                        // &mut self.world.positions,
                         &self.world.masses);
     }
 

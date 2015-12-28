@@ -24,13 +24,14 @@ impl Renderable for Sprite {
                 world: &World) {
         // find rotation in transforms
         let transform = world.transforms.get(self.entity);
-        let position = world.positions.get(self.entity);
+        // let position = world.positions.get(self.entity);
+        let position = transform.position;
         let rotation = transform.rotation;
 
         renderer.copy_ex(&self.texture,
                          None,
-                         Some(Rect::new_unwrap(position.value.x as i32,
-                                               position.value.y as i32,
+                         Some(Rect::new_unwrap(position.x as i32,
+                                               position.y as i32,
                                                32,
                                                32)),
                          rotation as f64,

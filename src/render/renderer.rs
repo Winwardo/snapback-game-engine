@@ -76,4 +76,3 @@ impl System<Sprite> for RenderSystem {
 
     fn tick(&mut self, world: &mut World, ticks: Ticks) {}
 }
- 

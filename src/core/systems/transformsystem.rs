@@ -17,15 +17,8 @@ impl TransformSystem {
     }
 
     pub fn move_all(&mut self, ticks: Ticks, world: &mut World, amount: f32) {
-        // for position in world.positions().components_mut() {
-        //     position.value.x += amount;
-        // }
-        // for rotation in world.rotations().components_mut() {
-        //     rotation.value += 1f32;
-        // }
-        // println!("hey");
         for transform in world.transforms.components_mut() {
-            // transform.position.transforms
+            transform.position.x += 0.5f32;
             transform.rotation += 1f32;
         }
     }
@@ -60,39 +53,4 @@ pub fn process_rotations(ticks: f32, entities: &Entities, transforms: &mut Trans
             transform.rotation += 90f32 * ticks as f32;
         }
     }
-}
-
-pub fn move_right(ticks: f32, entities: &Entities, transforms: &mut TransformSystem) {
-    for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
-        if entity.has_flags(C_TRANSFORM) {
-            // let mut transform2 = transforms.get_mut(*entity);
-
-            // let mut q = transform.rotation;
-            // unsafe{ q += 1f32; };
-
-            // transform.position.x += 1f32;
-        }
-    }
-}
-
-pub fn move_right2(ticks: f32, world: &mut World) {
-    // for (entity, transform) in entities.entities.iter().zip(transforms.transforms.iter_mut()) {
-    // 	if entity.has_flags(C_TRANSFORM) {
-    // let mut transform2 = transforms.get_mut(*entity);
-
-    // let mut q = transform.rotation;
-    // unsafe{ q += 1f32; };
-
-    // println!("go");
-
-
-    println!("go");
-    for position in world.positions.components_mut() {
-        println!("yeehaw");
-        position.value.x += 1f32;
-        println!("{:?}", position.value.x);
-        // position.value.x = 0f32;
-        // println!("x: {}", transform.position.x);
-    }
-    // }
 }

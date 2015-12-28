@@ -15,12 +15,12 @@ macro_rules! struct_world {
 
 macro_rules! impl_world {
     ($element: ident: $ty: ty) => {
-        impl World {        
+        impl World {
     		pub fn $element(&mut self) -> &mut $ty {
     			&mut self.$element
     		}
         }
-    } 
+    }
 }
 
 macro_rules! impl_world_long {
@@ -32,11 +32,16 @@ macro_rules! impl_world_long {
 }
 
 macro_rules! make_world {
-	// https://stackoverflow.com/questions/32289605/how-do-i-write-a-wrapper-for-a-macro-without-repeating-the-rules
+	// https://stackoverflow.com/questions/32289605/
+	// how-do-i-write-a-wrapper-for-a-macro-without-repeating-the-rules
     ($($tts:tt)*) => {
         struct_world!($($tts)*);
     	impl_world_long!($($tts)*);
-    }    	
+    }
 }
 
-make_world!(entities: Entities, positions: Positions, masses: Masses, transforms: Transforms);
+make_world!(
+	entities: Entities,
+	masses: Masses,
+	transforms: Transforms
+);

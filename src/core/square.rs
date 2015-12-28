@@ -32,15 +32,6 @@ pub fn make_square<'a>(world: &mut World,
 
     world.transforms.register(m, entity, Transform::make_default(entity));
 
-    world.positions.register(m,
-                             entity,
-                             Position {
-                                 value: Vec2 {
-                                     x: entity.id as f32,
-                                     y: 0f32,
-                                 },
-                             });
-
     // world.rotations.register(m,
     //                          entity,
     //                          Rotation {
