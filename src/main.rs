@@ -25,7 +25,7 @@ use core::world::*;
 use core::times::tick::*;
 
 fn main() {
-    env_logger::init().unwrap();
+    env_logger::init();
     let mut game = Game::new();
     game.run();
     game.close();

@@ -4,10 +4,10 @@ version = "0.0.1"
 authors = ["Topher Winward <hi@topher.io>"]
 
 [dependencies]
-time = "*"
-nalgebra = "*"
+time = "0.1"
+nalgebra = "0.6"
 log = "0.3"
-env_logger = "*"
-sdl2 = "*"
-rand = "*"
+env_logger = "0.5"
+sdl2 = "0.10"
+rand = "0.3"
 bitflags = "0.3"
